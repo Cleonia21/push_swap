@@ -14,8 +14,8 @@ static void	make_block_param(t_gap *gap, t_param *param)
 		if (gap->number < param->first)
 			param->first = gap->number;
 	}
-	param->min = param->first + (param->elem_num / 4) * 2;
-	param->max = param->first + (param->elem_num / 4) * 3;
+	param->min = param->first + param->elem_num / 2;
+	param->max = param->first + param->elem_num / 4 * 3;
 }
 
 t_block	*block_new(t_gap *gap)
@@ -23,6 +23,9 @@ t_block	*block_new(t_gap *gap)
 	t_block *empty;
 
 	empty = (t_block *)malloc(sizeof(t_block));
+	if (empty == NULL)
+		return (NULL);
+	empty->param = (t_param *)malloc(sizeof(t_param));
 	empty->gap = gap;
 	empty->front = NULL;
 	if (gap)

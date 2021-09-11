@@ -7,8 +7,9 @@
 			"command": "/usr/bin/gcc",
 			"args": [
 				"-g",
-				"*.c",
-				//"../gap_res/*.c",
+				"main.c",
+				"*/*.c",
+				//"resources/*.c",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}"
 			],

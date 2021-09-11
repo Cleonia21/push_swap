@@ -2,22 +2,33 @@
 
 int	gap_put_after(t_gap *elem, t_gap *after)
 {
-	if (elem == NULL || after == NULL)
+	if (after == NULL)
 		return (-1);
-	after->front = elem->front;
-	after->back = elem;
-	elem->front = after;
+	while (elem->front != NULL)
+		elem = elem->front;
+	if (elem->number == -1)
+		elem->number = after->number;
+	else
+	{
+		after->front = elem->front;
+		after->back = elem;
+		elem->front = after;
+	}
 	return (0);
 }
 
-int gap_put_before(t_gap *elem, t_gap *before)
+int gap_put_before(t_gap **elem, t_gap *before)
 {
-	if (elem == NULL || before == NULL)
+	if (before == NULL)
 		return (-1);
-	if (elem->back)
-		elem->back->front = before;
-	before->back = elem->back;
-	before->front = elem;
-	elem->back = before;
+	if ((*elem)->number == -1)
+		*elem = before;
+	else
+	{
+		before->back = (*elem)->back;
+		before->front = *elem;
+		(*elem)->back = before;
+		*elem = before;
+	}
 	return (0);
 }

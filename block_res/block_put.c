@@ -1,12 +1,19 @@
 #include "../push_swap.h"
 
-int	block_put_after(t_block *elem, t_block *after)
+int	block_put_after(t_block **elem, t_block *after)
 {
-	if (elem == NULL || after == NULL)
+	t_block *buf;
+	if (after == NULL)
 		return (-1);
-	while (elem->front)
-		elem = elem->front;
-	elem->front = after;
+	if (*elem == NULL)
+		*elem = after;
+	else
+	{
+		buf = *elem;
+		while (buf->front)
+			buf = buf->front;
+		buf->front = after;
+	}
 	return (0);
 }
 
@@ -14,8 +21,13 @@ int	block_put_before(t_block **list, t_block *before)
 {
 	if (before == NULL)
 		return (-1);
-	before->front = *list;
-	*list = before;
+	if (*list == NULL)
+		*list = before;
+	else
+	{
+		before->front = *list;
+		*list = before;
+	}
 	return (0);
 }
 

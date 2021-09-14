@@ -9,7 +9,7 @@
 				"-g",
 				"main.c",
 				"*/*.c",
-				//"resources/*.c",
+				"libft/libft.a",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}"
 			],

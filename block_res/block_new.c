@@ -18,7 +18,7 @@ static void	make_block_param(t_gap *gap, t_param *param)
 	param->max = param->first + param->elem_num / 4 * 3;
 }
 
-t_block	*block_new(t_gap *gap)
+t_block	*block_new(t_gap *gap, char belong)
 {
 	t_block *empty;
 
@@ -28,6 +28,7 @@ t_block	*block_new(t_gap *gap)
 	empty->param = (t_param *)malloc(sizeof(t_param));
 	empty->gap = gap;
 	empty->front = NULL;
+	empty->belong = belong;
 	if (gap)
 		make_block_param(gap, empty->param);
 	return (empty);

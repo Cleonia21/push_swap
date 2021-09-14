@@ -16,12 +16,16 @@ t_separator *new_sepr()
 }
 
 t_separator	*block_separation(t_block *from)
-{
+{//need buf to "from"
 	t_separator	*sepr;
+	int fd;
 	int min;
 	int max;
 	int num;
 
+	fd = open("commands.inf", O_WRONLY | O_APPEND);
+	if (fd == -1)
+		return (NULL);
 	min = from->param->min;
 	max = from->param->max;
 	sepr = new_sepr();
@@ -31,11 +35,21 @@ t_separator	*block_separation(t_block *from)
 	{
 		num = from->gap->number;
 		if (num < min)
+		{
 			gap_put_before(&(sepr->gap1), gap_new(num));
+			commands(fd, PUSH, from->belong);
+		}
 		else if (num >= min && num < max)
+		{
 			gap_put_after(sepr->gap2, gap_new(num));
+			commands(fd, ROTATE, from->belong);
+		}
 		else
+		{
 			gap_put_after(sepr->gap3, gap_new(num));
+			commands(fd, PUSH, from->belong);
+			commands(fd, ROTATE, belconv(from->belong));
+		}
 		from->gap = from->gap->front;
 	}
 	return (sepr);
@@ -44,11 +58,13 @@ t_separator	*block_separation(t_block *from)
 int block_trim(t_block **where, t_block **to)
 {
 	t_separator *sepr;
+	char belong;
 
+	belong = (*where)->belong;
 	sepr = block_separation(*where);
 	*where = block_del(*where);
-	block_put_before(to, block_new(sepr->gap1));
-	block_put_after(where, block_new(sepr->gap2));
-	block_put_after(to, block_new(sepr->gap3));
+	block_put_before(to, block_new(sepr->gap1, belconv(belong)));
+	block_put_after(where, block_new(sepr->gap2, belong));
+	block_put_after(to, block_new(sepr->gap3, belconv(belong)));
 	return (0);
 }

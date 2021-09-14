@@ -28,6 +28,7 @@ typedef struct		s_param
 
 typedef struct		s_block
 {
+	char			belong;
 	t_gap			*gap;
 	t_param			*param;
 	struct s_block	*front;
@@ -49,10 +50,10 @@ typedef struct		s_separator
 
 enum commands
 {
-	SWAP = 'S',//
-	PUSH = 'P',
-	ROTATE = 'r',
-	REV_ROTATE = 'r'
+	SWAP = 1,//
+	PUSH = 3,
+	ROTATE = 4,
+	REV_ROTATE = 6
 };
 
 t_gap	*gap_new(int number);
@@ -63,18 +64,26 @@ t_gap	*gap_get_first(t_gap *gap);
 t_gap	*gap_get_last(t_gap *gap);
 void	gap_free_oll(t_gap *gap);
 void	gap_print(t_gap *gap);
+int 	gap_len(t_block *block);
 
-t_block	*block_new(t_gap *gap);
+t_block	*block_new(t_gap *gap, char belong);
 int		block_put_before(t_block **list, t_block *before);
 int		block_put_after(t_block **elem, t_block *after);
 int		block_swap(t_block *from, t_block *to);
 t_block	*block_del(t_block *del);
-void	block_print(t_block *block);
-void	blocks_print(t_block *block);
+void	block_print(t_block *block, char *str);
+void	blocks_print(t_block *block, char *str);
+t_block *block_cut_last(t_block *block);
 
 t_gap	*rnd_mas_to_gap();
 void	ft_print_mas(int *mas, int razm_mas);
 int		block_trim(t_block **where, t_block **to);
+void    commands(int fd, int key, char bel);
+char 	belconv(char c);
+int		itoc(int i);
+int		ctoi(int c, int i);
+t_gap	*last_gap(t_gap *gap);
+t_block *last_block(t_block *block);
 
 
 #endif

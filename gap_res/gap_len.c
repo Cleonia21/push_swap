@@ -1,6 +1,21 @@
 #include "../push_swap.h"
 
-int gap_len(t_block *block)
+int gap_len(t_gap *gap)
+{
+    int len;
+
+    len = 0;
+    if (gap == NULL)
+        return (0);
+    while (gap)
+    {
+        len++;
+        gap = gap->front;
+    }
+    return (len);
+}
+
+int gap_len_forblock(t_block *block)
 {
     t_gap *gap;
     int i;

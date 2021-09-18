@@ -5,7 +5,7 @@ t_block *block_cut_last(t_block *block)
     t_block *buf;
     t_block *last;
 
-    if (!block)
+    if (block == NULL)
         return (NULL);
     buf = block;
     last = last_block(block);

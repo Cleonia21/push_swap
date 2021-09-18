@@ -4,6 +4,11 @@ int	gap_put_after(t_gap *elem, t_gap *after)
 {
 	if (after == NULL)
 		return (-1);
+	if (elem == NULL)
+	{
+		elem = after;
+		return (0);
+	}
 	while (elem->front != NULL)
 		elem = elem->front;
 	if (elem->number == -1)
@@ -21,6 +26,11 @@ int gap_put_before(t_gap **elem, t_gap *before)
 {
 	if (before == NULL)
 		return (-1);
+	if (*elem == NULL)
+	{
+		*elem = before;
+		return (0);
+	}
 	if ((*elem)->number == -1)
 		*elem = before;
 	else

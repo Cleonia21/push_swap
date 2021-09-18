@@ -6,7 +6,7 @@ void	gap_free_oll(t_gap *gap)
 
 	if (gap)
 	{
-		while (gap->front)
+		while (gap->front != NULL)
 		{
 			buf = gap->front;
 			free (gap);

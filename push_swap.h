@@ -8,8 +8,9 @@
 # include	<time.h>
 # include	<fcntl.h>
 # include	"libft/libft.h"
+# include	"get_next_line/get_next_line.h"
 
-#define LIST_LEN 100
+#define LIST_LEN 10
 
 typedef struct		s_gap
 {
@@ -69,7 +70,7 @@ enum errors
 
 t_gap	*gap_new(int number);
 int		gap_put_before(t_gap **elem, t_gap *before);
-int		gap_put_after(t_gap *elem, t_gap *after);
+int		gap_put_after(t_gap **elem, t_gap *after);
 void	gap_del(t_gap *gap);
 t_gap	*gap_get_first(t_gap *gap);
 t_gap	*gap_get_last(t_gap *gap);
@@ -99,8 +100,9 @@ int		itoc(int i);
 int		ctoi(int c, int i);
 t_gap	*last_gap(t_gap *gap);
 t_block *last_block(t_block *block);
-int		up_commands(int len_a, int len_b);
+void	up_commands(int len_a, int len_b);
 void	ft_error(int key, char *str);
+void sorter(t_lists *lists);
 
 
 #endif

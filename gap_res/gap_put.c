@@ -1,23 +1,26 @@
 #include "../push_swap.h"
 
-int	gap_put_after(t_gap *elem, t_gap *after)
+int	gap_put_after(t_gap **elem, t_gap *after)
 {
+	t_gap *buf;
+
+	buf = *elem;
 	if (after == NULL)
 		return (-1);
-	if (elem == NULL)
+	if (*elem == NULL)
 	{
-		elem = after;
+		*elem = after;
 		return (0);
 	}
-	while (elem->front != NULL)
-		elem = elem->front;
-	if (elem->number == -1)
-		elem->number = after->number;
+	while (buf->front != NULL)
+		buf = buf->front;
+	if (buf->number == -1)
+		buf->number = after->number;
 	else
 	{
-		after->front = elem->front;
-		after->back = elem;
-		elem->front = after;
+		after->front = NULL;
+		after->back = buf;
+		buf->front = after;
 	}
 	return (0);
 }

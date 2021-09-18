@@ -2,17 +2,10 @@
 
 static void	make_block_param(t_gap *gap, t_param *param)
 {
-	param->elem_num = 1;
-	param->first = gap->number;
-	while (gap->front)
-	{
-		gap = gap->front;
-		param->elem_num++;
-		if (gap->number < param->first)
-			param->first = gap->number;
-	}
-	param->min = param->first + param->elem_num / 2;
-	param->max = param->first + param->elem_num / 4 * 3;
+	param->elem_num = gap_len(gap);
+	param->first = gap_min_num(gap);
+	param->min = param->first + param->elem_num / 4;
+	param->max = param->first + param->elem_num / 2;
 }
 
 t_block	*block_new(t_gap *gap, char belong)

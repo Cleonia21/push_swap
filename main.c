@@ -1,95 +1,49 @@
 #include "push_swap.h"
 
-int blocks_up(t_lists *lists)
+void print_key(int key)
 {
-	int len_a;
-	int len_b;
-	t_block *block_a;
-	t_block *block_b;
-	t_block *buf;
-
-	block_a = block_cut_last(lists->block_a);
-	block_b = block_cut_last(lists->block_b);
-	if (up_commands(gap_len_forblock(block_a), gap_len_forblock(block_b)) == -1)
-		return (-1);
-	if (block_a)
-	{
-		if (block_put_before(&(lists->block_a), block_a) == -1)
-			return (-1);
-	}
-	if (block_b)
-	{
-		if (block_put_before(&(lists->block_b), block_b) == -1)
-			return (-1);
-	}
-	return (0);
+	if (key == SA)
+		ft_putendl_fd("sa", 1);
+	if (key == SB)
+		ft_putendl_fd("sb", 1);
+	if (key == SASB)
+		ft_putendl_fd("ss", 1);
+	if (key == PA)
+		ft_putendl_fd("pa", 1);
+	if (key == PB)
+		ft_putendl_fd("pb", 1);
+	if (key == RA)
+		ft_putendl_fd("ra", 1);
+	if (key == RB)
+		ft_putendl_fd("rb", 1);
+	if (key == RARB)
+		ft_putendl_fd("rr", 1);
+	if (key == RRA)
+		ft_putendl_fd("rra", 1);
+	if (key == RRB)
+		ft_putendl_fd("rrb", 1);
+	if (key == RRARRB)
+		ft_putendl_fd("rrr", 1);
 }
 
-int chek_for_up(t_lists *lists, int last_elem)
+void decoder()
 {
-	if (lists->block_a && lists->block_b)
-	{
-		if (last_elem == lists->block_a->param->first ||
-			last_elem == lists->block_b->param->first)
-			return (0);
-	}
-	else if (lists->block_a)
-	{
-		if (last_elem == lists->block_a->param->first)
-			return (0);
-	}
-	else if (lists->block_b)
-		if (last_elem == lists->block_b->param->first)
-			return (0);
-	return (1);
-}
+	int fd;
+	int key;
+	char *str;
 
-void    appoint_focus(t_block **focus, t_block **un_focus)
-{
-	t_block *buf;
-
-	if (*focus == NULL)
+	fd = open("commands.inf", O_RDONLY);
+	if (fd == -1)
+		ft_error(FILE_OPEN, "decoder");
+	get_next_line(fd, &str);
+	if (str == NULL)
+		ft_error(MEMORY_ALLOC, "decoder");
+	while (*str != '\0')
 	{
-		*focus = *un_focus;
-		*un_focus = NULL;
-	}
-	else if (*un_focus == NULL)
-		*un_focus = NULL;
-	else
-	{
-		if ((*focus)->param->first > (*un_focus)->param->first)
-		{
-			buf = *focus;
-			*focus = *un_focus;
-			*un_focus = buf;
-		}
-	}
-}
-
-void sorter(t_lists *lists)//ринофлуимуцил
-{
-	int last_elem;
-	t_block **focus;
-	t_block **un_focus;
-
-	focus = &(lists->block_a);
-	un_focus = &(lists->block_b);
-	while (*focus || *un_focus)
-	{
-		if ((*focus)->param->elem_num <= 6)
-		{
-			last_elem = (*focus)->param->first + (*focus)->param->elem_num;
-			block_sort(lists);
-			if (lists->block_a->front == NULL && lists->block_b == NULL)
-				lists->block_a = NULL;
-			else if (lists->block_a->param->first != LIST_LEN)
-				block_put_before(&(lists->block_a), block_new(gap_new(LIST_LEN), 'a'));
-			if (chek_for_up(lists, last_elem))
-				blocks_up(lists);
-		}
-		else
-			trim_into_three(focus, un_focus);
-		appoint_focus(focus, un_focus);
+		key = ft_atoi(str);
+		str = ft_strchr(str, '-');
+		str++;
+		print_key(key);
 	}
 }
 
@@ -102,12 +56,12 @@ int main()
 
 	fd = open("commands.inf", O_TRUNC);
 	if (fd == -1)
-		ft_error(-1);
+		ft_error(FILE_OPEN, "main");
 	close (fd);
 	gap = rnd_mas_to_gap();
 	lists.block_a = block_new(gap, 'a');
-	if (lists.block_a == NULL)
-		ft_error(1);
+	block_print(lists.block_a, ";;;;;;;;;;;;;;");
 	sorter(&lists);
+	decoder();
 	exit(0);
 }

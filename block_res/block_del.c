@@ -10,5 +10,6 @@ t_block *block_del(t_block *del)
     if (del->gap)
         gap_free_oll(del->gap);
     free (del);
+    del = NULL;
     return (buf);
 }

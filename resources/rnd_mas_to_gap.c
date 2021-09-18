@@ -43,7 +43,7 @@ t_gap	*rnd_mas_to_gap()
 	mas++;
 	while (*mas != -1)
 	{
-		if (gap_put_after(buf, gap_new(*mas)) == -1)
+		if (gap_put_after(&buf, gap_new(*mas)) == -1)
 			return (NULL);
 		buf = buf->front;
 		mas++;

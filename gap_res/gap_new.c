@@ -6,7 +6,7 @@ t_gap *gap_new(int number)
 
 	buf = (t_gap *)malloc(sizeof(t_gap));
 	if (buf == NULL)
-		return (NULL);
+		ft_error(MEMORY_ALLOC, "gap_new");
 	buf->number = number;
 	buf->back = NULL;
 	buf->front = NULL;

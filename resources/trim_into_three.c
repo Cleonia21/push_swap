@@ -20,7 +20,7 @@ static t_separator *new_sepr()
 	return (sepr);
 }
 
-t_separator	*block_separation(t_block *from, int fd)
+t_separator	*block_separation_a(t_block *from, int fd)
 {
 	t_separator	*sepr;
 
@@ -49,6 +49,35 @@ t_separator	*block_separation(t_block *from, int fd)
 	return (sepr);
 }
 
+t_separator	*block_separation_b(t_block *from, int fd)
+{
+	t_separator	*sepr;
+
+	sepr = new_sepr();
+	while (from->gap)
+	{
+		if (from->gap->number > from->param->max)
+		{
+			gap_put_before(&(sepr->gap1), gap_new(from->gap->number));
+			commands("p", belconv(from->belong), fd);
+		}
+		else if (from->gap->number > from->param->min &&
+				from->gap->number <= from->param->max)
+		{
+			gap_put_after(&(sepr->gap2), gap_new(from->gap->number));
+			commands("p", belconv(from->belong), fd);
+			commands("r", belconv(from->belong), fd);
+		}
+		else
+		{
+			gap_put_after(&(sepr->gap3), gap_new(from->gap->number));
+			commands("r", from->belong, fd);
+		}
+		from->gap = from->gap->front;
+	}
+	return (sepr);
+}
+
 
 int trim_into_three(t_lists *lists)
 {
@@ -67,7 +96,7 @@ int trim_into_three(t_lists *lists)
 	{
 		// gap_print_num(lists->block_a->gap);
 		// ft_putchar_fd('\n', 1);
-		sepr = block_separation(lists->block_a, fd);
+		sepr = block_separation_a(lists->block_a, fd);
 		lists->block_a = block_del(lists->block_a);
 		block_put_before(&(lists->block_b), block_new(sepr->gap1, 'b'));
 		block_put_after(&(lists->block_a), block_new(sepr->gap2, 'a'));
@@ -78,11 +107,11 @@ int trim_into_three(t_lists *lists)
 	{
 		// gap_print_num(lists->block_b->gap);
 		// ft_putchar_fd('\n', 1);
-		sepr = block_separation(lists->block_b, fd);
+		sepr = block_separation_b(lists->block_b, fd);
 		lists->block_b = block_del(lists->block_b);
 		block_put_before(&(lists->block_a), block_new(sepr->gap1, 'a'));
-		block_put_after(&(lists->block_b), block_new(sepr->gap2, 'b'));
-		block_put_after(&(lists->block_a), block_new(sepr->gap3, 'a'));
+		block_put_after(&(lists->block_a), block_new(sepr->gap2, 'a'));
+		block_put_after(&(lists->block_b), block_new(sepr->gap3, 'b'));
 		//ft_putchar_fd('\n', 1);
 	}
 	close (fd);

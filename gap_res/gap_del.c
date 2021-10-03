@@ -9,5 +9,6 @@ void gap_del(t_gap *gap)
 		if (gap->front)
 			gap->front->back = gap->back;
 		free(gap);
+		gap = NULL;
 	}
 }

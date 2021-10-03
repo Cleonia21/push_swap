@@ -40,14 +40,52 @@ void decoder()
 		ft_error(MEMORY_ALLOC, "decoder");
 	while (*str != '\0')
 	{
-		key = ft_atoi(str);
-		str = ft_strchr(str, '-');
+		if (*str == '-')
+			ft_putchar_fd('\n', 1);
+		else
+			ft_putchar_fd(*str, 1);
 		str++;
-		print_key(key);
 	}
 }
 
-int main()
+int ft_cnum(const char *str, char c)
+{
+	int num;
+
+	num = 0;
+	while (*str != '\0')
+	{
+		if (*str == c)
+			num++;
+		str++;
+	}
+	return (num);
+}
+
+t_gap *argv_mas_to_gap(int argc, char **argv)
+{
+	t_gap *gap;
+	int i;
+
+	i = 1;
+	gap = NULL;
+	if (argc < 2)
+		return (NULL);
+	if (argc == 2)
+	{
+		i = 0;
+		argc = ft_cnum(argv[1], ' ') + 1;
+		argv = ft_split(argv[1], ' ');
+	}
+	while (i < argc)
+	{
+		gap_put_after(&gap, gap_new(ft_atoi(argv[i])));
+		i++;
+	}
+	return (gap);
+}
+
+int main(int argc, char **argv)
 {
 	t_gap *gap;
 	t_lists lists;
@@ -58,9 +96,10 @@ int main()
 	if (fd == -1)
 		ft_error(FILE_OPEN, "main");
 	close (fd);
-	gap = rnd_mas_to_gap();
+    gap = argv_mas_to_gap(argc, argv);
 	lists.block_a = block_new(gap, 'a');
-	block_print(lists.block_a, ";;;;;;;;;;;;;;");
+	block_put_after(&(lists.block_a), block_new(gap_new(-1), 'a'));
+	//blocks_print(lists.block_a, ";;;;;;;;;;;;;;");
 	sorter(&lists);
 	decoder();
 	exit(0);

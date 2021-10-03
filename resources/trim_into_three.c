@@ -30,19 +30,19 @@ t_separator	*block_separation(t_block *from, int fd)
 		if (from->gap->number > from->param->max)
 		{
 			gap_put_before(&(sepr->gap1), gap_new(from->gap->number));
-			commands(fd, from->belong, 1, P);
+			commands("p", belconv(from->belong), fd);
 		}
 		else if (from->gap->number > from->param->min &&
 				from->gap->number <= from->param->max)
 		{
 			gap_put_after(&(sepr->gap2), gap_new(from->gap->number));
-			commands(fd, from->belong, 1, R);
+			commands("r", from->belong, fd);
 		}
 		else
 		{
 			gap_put_after(&(sepr->gap3), gap_new(from->gap->number));
-			commands(fd, from->belong, 1, P);
-			commands(fd, belconv(from->belong), 1, R);
+			commands("p", belconv(from->belong), fd);
+			commands("r", belconv(from->belong), fd);
 		}
 		from->gap = from->gap->front;
 	}
@@ -50,21 +50,41 @@ t_separator	*block_separation(t_block *from, int fd)
 }
 
 
-int trim_into_three(t_block **where, t_block **to)
+int trim_into_three(t_lists *lists)
 {
 	t_separator *sepr;
-	char belong;
 	int fd;
+	int b_first;
 
-	belong = (*where)->belong;
 	fd = open("commands.inf", O_WRONLY | O_APPEND);
 	if (fd == -1)
 		ft_error(FILE_OPEN, "block_separation");
-	sepr = block_separation(*where, fd);
+	//fd = 1;//
+	b_first = -1;
+	if (lists->block_b)
+		b_first = lists->block_b->param->first;
+	if (lists->block_a->param->first > b_first)
+	{
+		// gap_print_num(lists->block_a->gap);
+		// ft_putchar_fd('\n', 1);
+		sepr = block_separation(lists->block_a, fd);
+		lists->block_a = block_del(lists->block_a);
+		block_put_before(&(lists->block_b), block_new(sepr->gap1, 'b'));
+		block_put_after(&(lists->block_a), block_new(sepr->gap2, 'a'));
+		block_put_after(&(lists->block_b), block_new(sepr->gap3, 'b'));
+		//ft_putchar_fd('\n', 1);
+	}
+	else if (lists->block_a->param->first < b_first)
+	{
+		// gap_print_num(lists->block_b->gap);
+		// ft_putchar_fd('\n', 1);
+		sepr = block_separation(lists->block_b, fd);
+		lists->block_b = block_del(lists->block_b);
+		block_put_before(&(lists->block_a), block_new(sepr->gap1, 'a'));
+		block_put_after(&(lists->block_b), block_new(sepr->gap2, 'b'));
+		block_put_after(&(lists->block_a), block_new(sepr->gap3, 'a'));
+		//ft_putchar_fd('\n', 1);
+	}
 	close (fd);
-	*where = block_del(*where);
-	block_put_before(to, block_new(sepr->gap1, belconv(belong)));
-	block_put_after(where, block_new(sepr->gap2, belong));
-	block_put_after(to, block_new(sepr->gap3, belconv(belong)));
 	return (0);
 }

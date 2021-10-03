@@ -28,7 +28,7 @@ int	block_put_before(t_block **list, t_block *before)
 	else
 	{
 		before->front = *list;
-		list = &before;
+		*list = before;
 	}
 	return (0);
 }

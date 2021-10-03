@@ -57,28 +57,13 @@
 // 	}
 // }
 
-void    commands(int fd, char bel, int key_num, ...)
+void	commands(char *com, char belong, int fd)
 {
-	int key;
-	char bel_buf;
-	va_list lst;
-
-	bel_buf = bel;
-	va_start(lst, key_num);
-	while (key_num > 0)
-	{
-		key = va_arg(lst, int);
-		if (key == P)
-			bel = belconv(bel);
-		if (bel == 'a')
-			key = key * 10;
-		if (bel == 'b')
-			key = key * 10 + 1;
-		ft_putnbr_fd(key, fd);
-		ft_putchar_fd('-', fd);
-		key_num--;
-		bel = bel_buf;
-	}
+	ft_putstr_fd(com, fd);
+	if (belong == 'a')
+		ft_putstr_fd("a-", fd);
+	if (belong == 'b')
+		ft_putstr_fd("b-", fd);
 }
 
 /*

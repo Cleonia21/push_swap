@@ -56,169 +56,158 @@ void sort_gap(t_gap *gap, int fd, char belong);
 //     return (0);
 // }*/
 
-void sort_two_a(t_gap *gap, int fd)
-{
-    if (gap->number > gap->front->number)
-        commands(fd, '0', 1, SA);
-}
-
-void sort_two_b(t_gap *gap, int fd)
-{
-    if (gap->number > gap->front->number)
-        commands(fd, '0', 1, SB);
-    commands(fd, '0', 2, PA, PA);
-}
-
-void sort_three_a(t_gap *gap, int fd)
-{
-    int min;
-
-    min = gap_min_num(gap);
-	if (gap->number - min == 0)
-	{
-        gap = gap->front;
-		if (gap->number - min == 2)
-            commands(fd, 'a', 3, R, S, RR);
-	}
-    else if (gap->number - min == 1)
-    {
-        gap = gap->front;
-        if (gap->number - min == 0)
-            commands(fd, 'a', 1, S);
-        else
-            commands(fd, 'a', 4, R, S, RR, S);
-    }
-    else//2
-    {
-        gap = gap->front;
-        if (gap->number == 0)
-            commands(fd, 'a', 4, S, R, S, RR);
-        else//1
-            commands(fd, 'a', 6, R, P, RR, S, P, S);
-    }
-}
-
-void sort_three_b(t_gap *gap, int fd)
-{
-    int min;
-
-    min = gap_min_num(gap);
-	if (gap->number - min == 0)
-	{
-        gap = gap->front;
-		if (gap->number - min == 1)
-			commands(fd, '0', 6, PA, SB, PA, SB, PA, SB);
-        else
-            commands(fd, '0', 5, SB, PA, SB, PA, PA);
-	}
-    else if (gap->number - min == 1)
-    {
-        gap = gap->front;
-        if (gap->number - min == 0)
-            commands(fd, '0', 5, PA, SB, PA, SB, PA);
-        else
-            commands(fd, '0', 4, SB, PA, PA, PA);
-    }
-    else//2
-    {
-        gap = gap->front;
-        if (gap->number == 0)
-            commands(fd, '0', 4, PA, SB, PA, PA);
-        else//1
-            commands(fd, '0', 6, PA, PA, PA);
-    }
-}
-
 void sort_big_block(t_gap *gap, int fd, char belong)
 {
-    t_gap *first;
-    t_gap *second;
-    int middle;
+	t_gap *first;
+	t_gap *second;
+	int middle;
 
-    first = NULL;
-    second = NULL;
-    middle = gap_len(gap) / 2 + gap_min_num(gap);
-    while (gap)
-    {
-        commands(fd, belong, 1, P);
-        if (gap->number < middle)
-            gap_put_before(&first, gap_new(gap->number));
-        else
-        {
-            gap_put_after(&second, gap_new(gap->number));
-            commands(fd, belconv(belong), 1, R);
-        }
-        gap = gap->front;
-    }
-    sort_gap(first, fd, belconv(belong));
-    if (belong == 'a')
-        up_commands(0, gap_len(second));
-    else if (belong == 'b')
-        up_commands(gap_len(second), 0);
-    sort_gap(second, fd, belconv(belong));
+	//fd = 1;//
+	first = NULL;
+	second = NULL;
+	middle = gap_min_num(gap) + 4;
+	while (gap)
+	{
+		if (belong == 'a')
+		{
+			if (gap->number >= middle)
+			{
+				gap_put_before(&first, gap_new(gap->number));
+				ft_putstr_fd("pb-", fd);
+			}
+			else
+			{
+				gap_put_after(&second, gap_new(gap->number));
+				ft_putstr_fd("ra-", fd);
+			}
+		}
+		if (belong == 'b')
+		{
+			if (gap->number >= middle)
+			{
+				gap_put_before(&first, gap_new(gap->number));
+				ft_putstr_fd("pa-", fd);
+			}
+			else
+			{
+				gap_put_after(&second, gap_new(gap->number));
+				ft_putstr_fd("pa-ra-", fd);
+			}
+		}
+		gap = gap->front;
+	}
+	sort_gap(first, fd, belconv(belong));
+	up_commands(gap_len(second), 0);
+	sort_gap(second, fd, 'a');
+}
+
+t_gap *simplification_gap(t_gap *gap)
+{
+	t_gap *buf;
+	int min_num;
+
+	min_num = gap_min_num(gap);
+	buf = gap;
+	while (buf)
+	{
+		buf->number -= min_num;
+		buf = buf->front;
+	}
+	return (gap);
 }
 
 void sort_gap(t_gap *gap, int fd, char belong)
 {
-    int gaplen;
+	int gaplen;
 
-    gaplen = gap_len(gap);
-    if (gaplen > 3)
-        sort_big_block(gap, fd, belong);
-    if (gaplen == 3)
-    {
-        if (belong == 'a')
-            sort_three_a(gap, fd);
-        if (belong == 'b')
-            sort_three_b(gap, fd);
-    }
-    if (gaplen == 2)
-    {
-        if (belong == 'a')
-            sort_two_a(gap, fd);
-        if (belong == 'b')
-            sort_two_b(gap, fd);
-    }
+	gaplen = gap_len(gap);
+	gap = simplification_gap(gap);
+	if (gaplen > 5)
+		sort_big_block(gap, fd, belong);
+	if (gaplen == 5)
+	{
+		if (belong == 'a')
+			sort_fifth_a(gap, fd);
+		if (belong == 'b')
+			sort_fifth_b(gap, fd);
+	}
+	if (gaplen == 4)
+	{
+		if (belong == 'a')
+			sort_four_a(gap, fd);
+		if (belong == 'b')
+			sort_four_b(gap, fd);
+	}
+	if (gaplen == 3)
+	{
+		if (belong == 'a')
+			sort_three_a(gap, fd);
+		if (belong == 'b')
+			sort_three_b(gap, fd);
+	}
+	if (gaplen == 2)
+	{
+		if (belong == 'a')
+			sort_two_a(gap, fd);
+		if (belong == 'b')
+			sort_two_b(gap, fd);
+	}
 }
 
-char get_mark(t_lists *lists)
+char get_belong(t_lists *lists)
 {
-    char mark;
+	char belong;
 
-    if (lists->block_a == NULL)
-        mark = 'b';
-    else if (lists->block_b == NULL)
-        mark = 'a';
-    else if (lists->block_a->param->first > lists->block_b->param->first)
-        mark = 'a';
-    else
-        mark = 'b';
-    return (mark);
+	if (lists->block_a == NULL)
+		belong = 'b';
+	else if (lists->block_b == NULL)
+		belong = 'a';
+	else if (lists->block_a->param->first > lists->block_b->param->first)
+		belong = 'a';
+	else
+		belong = 'b';
+	return (belong);
 }
 
-int block_sort(t_lists *lists)
+static char chek_for_end(t_lists *lists, char belong)
+{
+	if (lists->block_a->param->first == -1 && lists->block_b == NULL)
+		return ('e');
+	return (belong);
+}
+
+char block_sort(t_lists *lists)
 {
 	int fd;
-    char belong;
+	char belong;
 
 	fd = open("commands.inf", O_WRONLY | O_APPEND);
 	if (fd == -1)
 		ft_error(FILE_OPEN, "block_sort");
-    belong = get_mark(lists);
-    if (belong == 'a')
-    {
-        sort_gap(lists->block_a->gap, fd, belong);
-        block_print(lists->block_a, "------sort------");
-        lists->block_a = block_del(lists->block_a);
-    }
-    if (belong == 'b')
-    {
-        sort_gap(lists->block_b->gap, fd, belong);
-        block_print(lists->block_b, "------sort------");
-        lists->block_b = block_del(lists->block_b);
-    }
-    close (fd);
-    return (0);
+	//fd = 1;
+	belong = get_belong(lists);
+	belong = chek_for_end(lists, belong);
+	if (belong == 'a')
+	{
+		// gap_print_num(lists->block_a->gap);//
+		// ft_putchar_fd(belong, fd);
+		// ft_putchar_fd('\n', fd);
+		//block_print(lists->block_a, "------sort------");
+		sort_gap(lists->block_a->gap, fd, belong);
+		lists->block_a = block_del(lists->block_a);
+	}
+	if (belong == 'b')
+	{
+		// gap_print_num(lists->block_b->gap);//
+		// ft_putchar_fd(belong, fd);
+		// ft_putchar_fd('\n', fd);
+		//block_print(lists->block_b, "------sort------");
+		sort_gap(lists->block_b->gap, fd, belong);
+		lists->block_b = block_del(lists->block_b);
+	}
+	//ft_putchar_fd('\n', fd);
+	close (fd);
+	return (belong);
 }
 
 /*

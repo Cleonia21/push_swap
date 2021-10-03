@@ -1,5 +1,13 @@
 #include "../push_swap.h"
 
+typedef struct s_min
+{
+	int	a_first;
+	int b_first;
+	int a_end;
+	int	b_end;
+}				t_min;
+
 /* this function moves the last blocks or block to the beginning. */
 static void blocks_up(t_block **block_f, t_block **block_u)
 {
@@ -37,85 +45,68 @@ t_block *block_get_last(t_block *block)
 	return (block);
 }
 
-
-void chek_for_up(t_block **focus, t_block **un_focus, int last_num)
+t_min initial_min()
 {
-	t_block *last_f;
-	t_block *last_u;
-	int last_num_f;
-	int last_num_u;
-
-	last_f = block_get_last(*focus);
-	last_u = block_get_last(*un_focus);
-	last_num_f = -1;
-	last_num_u = -1;
-	if (*focus)
-	{
-		if (last_f == *focus && (*focus)->belong == 'b')
-			last_f = NULL;
-	}
-	if (*un_focus)
-	{
-		if (last_u == *un_focus && (*un_focus)->belong == 'b')
-			last_u = NULL;
-	}
-	if (last_f)
-		last_num_f = last_f->param->first + last_f->param->elem_num;
-	if (last_u)
-		last_num_u = last_u->param->first + last_u->param->elem_num;
-	if (last_num_f == last_num)
-	{
-		if (last_num_u == last_num - last_f->param->elem_num)
-			blocks_up(focus, un_focus);
-		else
-			blocks_up(focus, NULL);
-	}
-	if (last_num_u == last_num)
-	{
-		if (last_num_f == last_num - last_u->param->elem_num)
-			blocks_up(focus, un_focus);
-		else
-			blocks_up(un_focus, NULL);
-	}
+	t_min min;
+	min.a_first = -1;
+	min.a_end = -1;
+	min.b_first = -1;
+	min.b_end = -1;
+	return (min);
 }
 
-static void appoint_focus(t_block **focus, t_block **un_focus, int last)
+static char chek_for_end(t_lists *lists, char belong)
 {
-	t_block *buf;
+	if (lists->block_a->param->first == -1 && lists->block_b == NULL
+		&& lists->block_a->front == NULL)
+		return ('e');
+	return (belong);
+}
 
-	chek_for_up(focus, un_focus, last);
-	if (*focus == NULL)
-		*focus = *un_focus;
-	else if (*focus && *un_focus)
+char chek_for_up(t_lists *lists)
+{
+	t_min min;
+
+	if (chek_for_end(lists, 'a') == 'e')
+		return ('e');
+	min = initial_min();
+	if (lists->block_a)
 	{
-		buf = *focus;
-		*focus = *un_focus;
-		*un_focus = buf;
+		min.a_first = lists->block_a->param->first;
+		min.a_end = block_get_last(lists->block_a)->param->first;
+		if (min.a_end == min.a_first)
+			min.a_end = -1;
 	}
+	if (lists->block_b)
+	{
+		min.b_first = lists->block_b->param->first;
+		min.b_end = block_get_last(lists->block_b)->param->first;
+		if (min.b_end == min.b_first)
+			min.b_end = -1;
+	}
+	if (min.a_end > min.a_first && min.a_end > min.b_first
+		&& min.b_end > min.a_first && min.b_end > min.b_first)
+		blocks_up(&(lists->block_a), &(lists->block_b));
+	else if (min.a_end > min.a_first && min.a_end > min.b_first)
+		blocks_up(&(lists->block_a), NULL);
+	else if (min.b_end > min.a_first && min.b_end > min.b_first)
+		blocks_up(&(lists->block_b), NULL);
+	return ('a');
 }
 
 void sorter(t_lists *lists)
 {
-	int last;
-	t_block *focus;
-	t_block *un_focus;
+	char end;
 
-	trim_into_three(&(lists->block_a), &(lists->block_b));
-	focus = (lists->block_b);
-	un_focus = (lists->block_a);
-	last = (focus)->param->first;
-	while (focus || un_focus)
+	end = 'a';
+	while (end != 'e')
 	{
-		if ((focus)->param->elem_num <= 6)
-		{
-			last = (focus)->param->first;
-			block_sort(lists);
-			focus = (lists->block_b);
-			un_focus = (lists->block_a);
-		}
+		if (lists->block_a && lists->block_a->param->elem_num <= 10
+			&& lists->block_a->param->first != -1
+			|| lists->block_b && lists->block_b->param->elem_num <= 10)
+			end = block_sort(lists);
 		else
-			trim_into_three(&focus, &un_focus);
-		if (focus || un_focus)
-			appoint_focus(&focus, &un_focus, last);
+			trim_into_three(lists);
+		end = chek_for_up(lists);
 	}
 }

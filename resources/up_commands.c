@@ -9,18 +9,19 @@ void up_commands(int len_a, int len_b)
 		ft_error(FILE_OPEN, "up_commands");
 	while (len_a > 0 && len_b > 0)
 	{
-		commands(fd, '0', 1, RRARRB);
+		ft_putstr_fd("rrr-", fd);
 		len_a--;
 		len_b--;
 	}
 	while (len_a > 0)
 	{
-		commands(fd, '0', 1, RRA);
+		ft_putstr_fd("rra-", fd);
 		len_a--;
 	}
 	while (len_b > 0)
 	{
-		commands(fd, '0', 1, RRB);
+		ft_putstr_fd("rrb-", fd);
 		len_b--;
 	}
+	close(fd);
 }

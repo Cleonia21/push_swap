@@ -10,7 +10,7 @@
 # include	"libft/libft.h"
 # include	"get_next_line/get_next_line.h"
 
-#define LIST_LEN 10
+#define LIST_LEN 100
 
 typedef struct		s_gap
 {
@@ -65,7 +65,9 @@ enum errors
 {
 	FILE_OPEN = -1,
 	FILE_READ = -2,
-	MEMORY_ALLOC = -3
+	MEMORY_ALLOC = -3,
+	ARG_NULL = -4,
+	SWAP = -5
 };
 
 t_gap	*gap_new(int number);
@@ -76,10 +78,12 @@ t_gap	*gap_get_first(t_gap *gap);
 t_gap	*gap_get_last(t_gap *gap);
 void	gap_free_oll(t_gap *gap);
 void	gap_print(t_gap *gap);
+void	gap_print_num(t_gap *gap);
 int 	gap_len_forblock(t_block *block);
 int		gap_len(t_gap *gap);
 int		*gap_for_mas(t_gap *gap);
 int		gap_min_num(t_gap *gap);
+void	gap_swap(t_gap *gap, int fd);
 
 t_block	*block_new(t_gap *gap, char belong);
 int		block_put_before(t_block **list, t_block *before);
@@ -89,12 +93,23 @@ t_block	*block_del(t_block *del);
 void	block_print(t_block *block, char *str);
 void	blocks_print(t_block *block, char *str);
 t_block *block_cut_last(t_block *block);
-int		block_sort(t_lists *lists);
+char		block_sort(t_lists *lists);
+
+void	sort_gap(t_gap *gap, int fd, char belong);
+int		is_gap_sort(t_gap *gap, char belong);
+void	sort_two_a(t_gap *gap, int fd);
+void	sort_two_b(t_gap *gap, int fd);
+void	sort_three_a(t_gap *gap, int fd);
+void	sort_three_b(t_gap *gap, int fd);
+void	sort_four_a(t_gap *gap, int fd);
+void	sort_four_b(t_gap *gap, int fd);
+void	sort_fifth_a(t_gap *gap, int fd);
+void	sort_fifth_b(t_gap *gap, int fd);
 
 t_gap	*rnd_mas_to_gap();
 void	ft_print_mas(int *mas, int razm_mas);
-int		trim_into_three(t_block **where, t_block **to);
-void    commands(int fd, char bel, int key_num, ...);
+int		trim_into_three(t_lists *lists);
+void	commands(char *com, char belong, int fd);
 char 	belconv(char c);
 int		itoc(int i);
 int		ctoi(int c, int i);
@@ -102,7 +117,7 @@ t_gap	*last_gap(t_gap *gap);
 t_block *last_block(t_block *block);
 void	up_commands(int len_a, int len_b);
 void	ft_error(int key, char *str);
-void sorter(t_lists *lists);
-
+void	sorter(t_lists *lists);
+t_gap *argv_mas_to_gap(int argc, char **argv);
 
 #endif

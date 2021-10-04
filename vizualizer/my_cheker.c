@@ -1,5 +1,5 @@
 #include "../push_swap.h"
-
+/*
 static void push(t_gap **gap1, t_gap **gap2)
 {
 	t_gap *buf;
@@ -175,22 +175,22 @@ static void decoder(char *str, t_gap *gap_a, t_gap *gap_b)
 	}
 }
 
-// int main(int argc, char **argv)
-// {
-// 	t_gap *gap_a;
-// 	t_gap *gap_b;
-// 	t_lists lists;
-// 	char *str;
-// 	int fd;
+int main(int argc, char **argv)
+{
+	t_gap *gap_a;
+	t_gap *gap_b;
+	t_lists lists;
+	char *str;
+	int fd;
 
-// 	gap_a = argv_mas_to_gap(argc, argv);
-// 	gap_b = NULL;
+	gap_a = argv_mas_to_gap(argc, argv);
+	gap_b = NULL;
 
-// 	fd = open("commands.inf", O_RDONLY);
-// 	if (fd == -1)
-// 		ft_error(FILE_OPEN, "decoder");
-// 	get_next_line(fd, &str);
-// 	if (str == NULL)
-// 		ft_error(MEMORY_ALLOC, "decoder");
-// 	decoder(str, gap_a, gap_b);
-// }
+	fd = open("commands.inf", O_RDONLY);
+	if (fd == -1)
+		ft_error(FILE_OPEN, "decoder");
+	get_next_line(fd, &str);
+	if (str == NULL)
+		ft_error(MEMORY_ALLOC, "decoder");
+	decoder(str, gap_a, gap_b);
+}*/

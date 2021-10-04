@@ -30,7 +30,9 @@ void	sort_fifth_a(t_gap *gap, int fd)
 {
 	t_gap *b_gap;
 	t_gap *under_gap;
+	int ra;
 
+	ra = 0;
 	b_gap = NULL;
 	under_gap = NULL;
 	while (is_gap_sort(gap, 'a') == -1)
@@ -45,12 +47,16 @@ void	sort_fifth_a(t_gap *gap, int fd)
 		}
 		else if (gap->number == 1 || gap->number == 0)
 		{
+			ra++;
 			ft_putstr_fd("ra-", fd);
 			gap_put_after(&under_gap, gap_new(gap->number));
 			gap = gap->front;
 		}
 	}
 	sort_two_b(b_gap, fd);
-	ft_putstr_fd("rra-rra-", fd);
+	if (ra == 1)
+		ft_putstr_fd("rra-", fd);
+	if (ra == 2)
+		ft_putstr_fd("rra-rra-", fd);
 	sort_two_a(under_gap, fd);
 }

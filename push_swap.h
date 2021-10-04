@@ -44,21 +44,18 @@ typedef struct 		s_lists
 
 enum commands
 {
-	S = 1,//
 	SA = 10,
 	SB = 11,
-	SASB = 2,
-	P = 3,
-	PA = 30,
-	PB = 31,
-	R = 4,
-	RA = 40,
-	RB = 41,
-	RARB = 5,
-	RR = 6,
-	RRA = 60,
-	RRB = 61,
-	RRARRB = 62
+	SASB = 1,//ss
+	PA = 20,
+	PB = 21,
+	PAPB = 2,//-
+	RA = 30,
+	RB = 31,
+	RARB = 3,//rr
+	RRA = 40,
+	RRB = 41,
+	RRARRB = 4//rrr
 };
 
 enum errors
@@ -67,7 +64,9 @@ enum errors
 	FILE_READ = -2,
 	MEMORY_ALLOC = -3,
 	ARG_NULL = -4,
-	SWAP = -5
+	SWAP = -5,
+	ARGV = -6,
+	OTHER = -7
 };
 
 t_gap	*gap_new(int number);
@@ -119,5 +118,6 @@ void	up_commands(int len_a, int len_b);
 void	ft_error(int key, char *str);
 void	sorter(t_lists *lists);
 t_gap *argv_mas_to_gap(int argc, char **argv);
+void decoder();
 
 #endif

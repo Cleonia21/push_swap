@@ -7,14 +7,15 @@
 #     echo ${myarr[$i]}
 # done
 
-for (( count=1; count<1000; count++ ))
+for (( count=1; count<100; count++ ))
 	do
-		ARG=$(./random_num 10);
+		ARG=$(./random_num 500);
 		sleep 1
 		# ARG=${myarr[@]:0:$1}
-		if [[ "$(./a.out $ARG | ./checker_Mac $ARG)" =~ "KO" ]]; then
+		if [[ "$(./push_swap $ARG | ./checker_Mac $ARG)" =~ "KO" ]]; then
 			echo $ARG
-			# echo "OK"
+			count=1000
+			# echo "KO"
 		else
 		 	echo "OK"
 		# 	echo $ARG

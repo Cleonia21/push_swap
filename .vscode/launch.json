@@ -4,13 +4,12 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-    
         {
             "name": "gcc - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["19 23 24 8 15 9 1 22 14 0 20 12 3 5 16 13 4 6 21 10 2 11 7 18 17"],
+            "args": ["0 2 4 6 9 123 435 -80"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

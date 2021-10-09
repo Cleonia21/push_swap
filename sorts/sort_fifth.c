@@ -1,6 +1,6 @@
 #include "../push_swap.h"
 
-void	sort_fifth_b(t_gap *gap, int fd)
+int	sort_fifth_b(t_gap *gap, int fd)
 {
 	t_gap *a_gap;
 	t_gap *under_gap;
@@ -24,9 +24,10 @@ void	sort_fifth_b(t_gap *gap, int fd)
 	sort_gap(a_gap, fd, 'a');
 	ft_putstr_fd("rra-rra-", fd);
 	sort_two_a(under_gap, fd);
+	return (0);
 }
 
-void	sort_fifth_a(t_gap *gap, int fd)
+int	sort_fifth_a(t_gap *gap, int fd)
 {
 	t_gap *b_gap;
 	t_gap *under_gap;
@@ -59,4 +60,5 @@ void	sort_fifth_a(t_gap *gap, int fd)
 	if (ra == 2)
 		ft_putstr_fd("rra-rra-", fd);
 	sort_two_a(under_gap, fd);
+	return (0);
 }

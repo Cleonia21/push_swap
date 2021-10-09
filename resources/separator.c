@@ -1,14 +1,5 @@
 #include "../push_swap.h"
 
-static void	commands(char *com, char belong, int fd)
-{
-	ft_putstr_fd(com, fd);
-	if (belong == 'a')
-		ft_putstr_fd("a-", fd);
-	if (belong == 'b')
-		ft_putstr_fd("b-", fd);
-}
-
 static t_separator *new_sepr()
 {
 	t_separator	*sepr;
@@ -22,85 +13,53 @@ static t_separator *new_sepr()
 	return (sepr);
 }
 
-static	void	*free_separator(t_separator *sepr, t_block *block)
+t_separator	*ft_sepr(t_lists *lists, t_separator	*sepr, int fd, char belong)
 {
-	if (sepr)
+	t_block		*buf_block;
+
+	if (belong == 'a')
 	{
-		if (sepr->gap1)
-			ft_free_ollgap(sepr->gap1);
-		if (sepr->gap2)
-			ft_free_ollgap(sepr->gap2);
-		if (sepr->gap3)
-			ft_free_ollgap(sepr->gap3);
-		free (sepr);
+		buf_block = lists->block_a;
+		sepr = block_sepr_a(lists->block_a, sepr, fd);
+		if (sepr == NULL)
+			return (NULL);
+		lists->block_a = lists->block_a->front;
 	}
-	if (block)
-		ft_free_block(block);
-	return (NULL);
-}
-
-static	t_separator	*block_sepr_a(t_block *from, t_separator *sepr, int fd)
-{
-	t_block	*buf_block;
-
-	buf_block = from;
-	while (from->gap)
+	if (belong == 'b')
 	{
-		if (from->gap->number > from->param->max)
-		{
-			if (gap_put_before(&(sepr->gap1), gap_new(from->gap->number)) == -1)
-				return (free_separator(sepr, from));
-			commands("p", belconv(from->belong), fd);
-		}
-		else if (from->gap->number > from->param->min &&
-				from->gap->number <= from->param->max)
-		{
-			if (gap_put_after(&(sepr->gap2), gap_new(from->gap->number)) == -1)
-				return (free_separator(sepr, from));
-			commands("r", from->belong, fd);
-		}
-		else
-		{
-			if (gap_put_after(&(sepr->gap3), gap_new(from->gap->number)) == -1)
-				return (free_separator(sepr, from));
-			commands("p", belconv(from->belong), fd);
-			commands("r", belconv(from->belong), fd);
-		}
-		from->gap = from->gap->front;
+		buf_block = lists->block_b;
+		sepr = block_sepr_b(lists->block_b, sepr, fd);
+		if (sepr == NULL)
+			return (NULL);
+		lists->block_b = lists->block_b->front;
 	}
 	ft_free_block(buf_block);
 	return (sepr);
 }
 
-static	t_separator	*block_sepr_b(t_block *from, t_separator *sepr, int fd)
+int		separator(t_lists *lists, char belong, int fd)
 {
-	t_block	*buf_block;
+	t_separator	*sepr;
+	int			retval;
 
-	buf_block = from;
-	while (from->gap)
-	{
-		if (from->gap->number > from->param->max)
-		{
-			if (gap_put_before(&(sepr->gap1), gap_new(from->gap->number)) == -1)
-				return (free_separator(sepr, from));
-			commands("p", belconv(from->belong), fd);
-		}
-		else if (from->gap->number > from->param->min &&
-				from->gap->number <= from->param->max)
-		{
-			if (gap_put_after(&(sepr->gap2), gap_new(from->gap->number)) == -1)
-				return (free_separator(sepr, from));
-			commands("p", belconv(from->belong), fd);
-			commands("r", belconv(from->belong), fd);
-		}
-		else
-		{
-			if (gap_put_after(&(sepr->gap3), gap_new(from->gap->number)) == -1)
-				return (free_separator(sepr, from));
-			commands("r", from->belong, fd);
-		}
-		from->gap = from->gap->front;
-	}
-	ft_free_block(buf_block);
-	return (sepr);
+	sepr = new_sepr();
+	retval = 0;
+	if (sepr == NULL)
+		return (-1);
+	if (belong == 'a')
+		sepr = ft_sepr(lists, sepr, fd, belong);
+	else if (belong == 'b')
+		sepr = ft_sepr(lists, sepr, fd, belong);
+	if (sepr == NULL)
+		return (-1);
+	if (belong == 'a')
+		retval += block_put_before(&(lists->block_b), block_new(sepr->gap1, 'b'));
+	else if (belong == 'b')
+		retval += block_put_before(&(lists->block_a), block_new(sepr->gap1, 'a'));
+	retval += block_put_after(&(lists->block_a), block_new(sepr->gap2, 'a'));
+	retval += block_put_after(&(lists->block_b), block_new(sepr->gap3, 'b'));
+	free(sepr);
+	if (retval != 0)
+		return (-1);
+	return (0);
 }

@@ -1,6 +1,6 @@
 #include "../push_swap.h"
 
-void sort_four_a(t_gap *gap, int fd)
+int sort_four_a(t_gap *gap, int fd)
 {
 	int ra;
 	t_gap *buf;
@@ -27,9 +27,10 @@ void sort_four_a(t_gap *gap, int fd)
 	if (ra == 1)
 		ft_putstr_fd("rra-", fd);
 	sort_two_b(buf, fd);
+	return (0);
 }
 
-void sort_four_b(t_gap *gap, int fd)
+int sort_four_b(t_gap *gap, int fd)
 {
 	t_gap *buf;
 	int min;
@@ -48,4 +49,5 @@ void sort_four_b(t_gap *gap, int fd)
 	}
 	sort_gap(buf, fd, 'a');
 	ft_putstr_fd("rrb-pa-", fd);
+	return (0);
 }

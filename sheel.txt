@@ -1,3 +1,3 @@
 gcc rand_num/random_num.c libft/libft.a -o random_num
-ARG=$(./random_num 12); ./a.out $ARG | ./checker_Mac $ARG
+ARG=$(./random_num 100); ./a.out $ARG | ./checker_Mac $ARG
 gcc main.c */*.c libft/libft.a

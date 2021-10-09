@@ -23,6 +23,6 @@ void	little_sorts(t_gap *gap)
 	else if (len == 4)
 		lsort_four(gap, fd);
 	else if (len == 5)
-		lsort_fifth(gap, fd);
+		sort_fifth_a(gap, fd);
 	close(fd);
 }

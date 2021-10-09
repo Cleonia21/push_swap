@@ -12,19 +12,19 @@
 
 #define LIST_LEN 100
 
-typedef struct		s_separator
-{
-	t_gap			*gap1;
-	t_gap			*gap2;
-	t_gap			*gap3;
-}					t_separator;
-
 typedef struct		s_gap
 {
 	struct s_gap	*front;
 	struct s_gap	*back;
 	int				number;
 }					t_gap;
+
+typedef struct		s_separator
+{
+	t_gap			*gap1;
+	t_gap			*gap2;
+	t_gap			*gap3;
+}					t_separator;
 
 typedef struct		s_param
 {
@@ -83,34 +83,41 @@ int		lsort_fifth(t_gap *gap, int fd);
 void	lsort_four(t_gap *gap, int fd);
 void	lsort_three(t_gap *gap, int fd);
 
-void	sort_gap(t_gap *gap, int fd, char belong);
+int		sort_gap(t_gap *gap, int fd, char belong);
 int		is_gap_sort(t_gap *gap, char belong);
-void	sort_two_a(t_gap *gap, int fd);
-void	sort_two_b(t_gap *gap, int fd);
-void	sort_three_a(t_gap *gap, int fd);
-void	sort_three_b(t_gap *gap, int fd);
-void	sort_four_a(t_gap *gap, int fd);
-void	sort_four_b(t_gap *gap, int fd);
-void	sort_fifth_a(t_gap *gap, int fd);
-void	sort_fifth_b(t_gap *gap, int fd);
+int		sort_two_a(t_gap *gap, int fd);
+int		sort_two_b(t_gap *gap, int fd);
+int		sort_three_a(t_gap *gap, int fd);
+int		sort_three_b(t_gap *gap, int fd);
+int		sort_four_a(t_gap *gap, int fd);
+int		sort_four_b(t_gap *gap, int fd);
+int		sort_fifth_a(t_gap *gap, int fd);
+int		sort_fifth_b(t_gap *gap, int fd);
 
 void	ft_free_ollgap(t_gap *gap);
 void	*ft_free_imas(int *mas);
 void	*ft_free_ccmas(char **mas);
 void	*ft_free_block(t_block *block);
-void	sorter(t_lists *lists);
+int		sorter(t_lists *lists);
+
+int		separator(t_lists *lists, char belong, int fd);
+t_separator	*block_sepr_a(t_block *from, t_separator *spr, int fd);
+t_separator	*block_sepr_b(t_block *from, t_separator *spr, int fd);
+void		*free_separator(t_separator *sepr, t_block *block);
+
 
 /* finish */
 t_gap	*argv_to_gap(int argc, char **argv);
 void	decoder();
 void	simplificator(char *str);
 int		trim_into_three(t_lists *lists);
-int		separator(t_lists *lists, int b_first, int fd);
 void	up_commands(int len_a, int len_b);
 void	ft_error();
 char 	belconv(char c);
+void	chek_for_up(t_lists *lists);
 
 void	gap_del(t_gap *gap);
+t_gap	*gap_get_first(t_gap *gap);
 int 	gap_len_forblock(t_block *block);
 int		gap_len(t_gap *gap);
 int		gap_min_num(t_gap *gap);

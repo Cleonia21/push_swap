@@ -19,7 +19,7 @@ t_nums initial_nums(t_gap *gap)
 	return (nums);
 }
 
-void	sort_three_a(t_gap *gap, int fd)
+int	sort_three_a(t_gap *gap, int fd)
 {
 	t_nums nums;
 
@@ -43,9 +43,10 @@ void	sort_three_a(t_gap *gap, int fd)
 		else if (nums.second == 1)
 			ft_putstr_fd("ra-sa-pb-rra-sa-pa-", fd);
 	}
+	return (0);
 }
 
-void	sort_three_b(t_gap *gap, int fd)
+int	sort_three_b(t_gap *gap, int fd)
 {
 	t_nums nums;
 
@@ -71,4 +72,5 @@ void	sort_three_b(t_gap *gap, int fd)
 		else if (nums.second == 1)
 			ft_putstr_fd("pa-ra-pa-pa-sa-rra-", fd);
 	}
+	return (0);
 }

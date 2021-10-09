@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cleonia <cleonia@school.42>                +#+  +:+       +#+        */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 00:21:23 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/08 20:15:10 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/09 19:23:04 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	ft_free_lists(t_lists *lists)
+{
+	free(lists->block_a);
+}
 
 int	main(int argc, char **argv)
 {
@@ -19,27 +24,30 @@ int	main(int argc, char **argv)
 	int		retval;
 	int		fd;
 
-	/* clean file */
 	fd = open("commands.inf", O_TRUNC);
 	if (fd == -1)
 		ft_error(FILE_OPEN, "main");
 	close (fd);
-	/* checking the argument for conditions and writing to the gap */
     gap = argv_to_gap(argc, argv);
 	if (gap == NULL)
 		ft_error();
+	if (is_gap_sort(gap, 'a') == 1)
+		exit (0);
 	lists.block_a = block_new(gap, 'a');
 	if (lists.block_a == NULL)
+	{
+		ft_free_ollgap(gap);
 		ft_error();
-	/* insert a landmark on sorted lists */
+	}
 	if (block_put_after(&(lists.block_a), block_new(gap_new(-1), 'a')) == -1)
+	{
+		ft_free_block(lists.block_a);
 		ft_error();
-	/* write sorts command in file */
+	}
 	if (gap_len(gap) <= 5)
 		little_sorts(gap);
 	else
-		sorter(&lists);	
-	/* simplification and console output */
-	decoder();
+		sorter(&lists);
+	//decoder();
 	exit(0);
 }

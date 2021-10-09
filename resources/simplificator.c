@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simplificator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cleonia <cleonia@school.42>                +#+  +:+       +#+        */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:36:04 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/05 16:36:05 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/09 15:09:12 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void	simplificator(char *str)
 		next_com = get_next_com_key(str);
 		if (com + 1 == next_com || com - 1 == next_com)
 			str = paste_key(com / 10, str);
-		else if (com == RA && next_com == RRA || com == RRA && next_com == RA
-			|| com == RB && next_com == RRB || com == RRB && next_com == RB)
+		else if ((com == RA && next_com == RRA) || (com == RRA && next_com == RA)
+			|| (com == RB && next_com == RRB) || (com == RRB && next_com == RB))
 			str = paste_dash(paste_dash(str));
 		else
 		{

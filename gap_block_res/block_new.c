@@ -12,12 +12,14 @@ t_block	*block_new(t_gap *gap, char belong)
 {
 	t_block *empty;
 
+	if (gap == NULL)
+		return (NULL);
 	empty = (t_block *)malloc(sizeof(t_block));
 	if (empty == NULL)
-		ft_error(MEMORY_ALLOC, "block_new");
+		return (NULL);
 	empty->param = (t_param *)malloc(sizeof(t_param));
 	if (empty->param == NULL)
-		ft_error(MEMORY_ALLOC, "block_new");
+		return (ft_free_block(empty));
 	empty->gap = gap;
 	empty->front = NULL;
 	empty->belong = belong;

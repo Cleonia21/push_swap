@@ -1,6 +1,6 @@
 #include "../push_swap.h"
 
-void up_commands(int len_a, int len_b)
+void	up_commands(int len_a, int len_b)
 {
 	int fd;
 

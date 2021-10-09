@@ -3,7 +3,7 @@
 int	block_put_after(t_block **list, t_block *after)
 {
 	t_block *buf;
-	if (after == NULL)
+	if (after == NULL || list == NULL)
 		return (-1);
 	if (*list == NULL)
 		*list = after;

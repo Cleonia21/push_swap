@@ -12,6 +12,13 @@
 
 #define LIST_LEN 100
 
+typedef struct		s_separator
+{
+	t_gap			*gap1;
+	t_gap			*gap2;
+	t_gap			*gap3;
+}					t_separator;
+
 typedef struct		s_gap
 {
 	struct s_gap	*front;
@@ -69,30 +76,12 @@ enum errors
 	OTHER = -7
 };
 
-t_gap	*gap_new(int number);
-int		gap_put_before(t_gap **elem, t_gap *before);
-int		gap_put_after(t_gap **elem, t_gap *after);
-void	gap_del(t_gap *gap);
-t_gap	*gap_get_first(t_gap *gap);
-t_gap	*gap_get_last(t_gap *gap);
-void	gap_free_oll(t_gap *gap);
-void	gap_print(t_gap *gap);
-void	gap_print_num(t_gap *gap);
-int 	gap_len_forblock(t_block *block);
-int		gap_len(t_gap *gap);
-int		*gap_for_mas(t_gap *gap);
-int		gap_min_num(t_gap *gap);
-void	gap_swap(t_gap *gap, int fd);
+t_gap	*simplification_gap(t_gap *gap);
 
-t_block	*block_new(t_gap *gap, char belong);
-int		block_put_before(t_block **list, t_block *before);
-int		block_put_after(t_block **elem, t_block *after);
-int		block_swap(t_block *from, t_block *to);
-t_block	*block_del(t_block *del);
-void	block_print(t_block *block, char *str);
-void	blocks_print(t_block *block, char *str);
-t_block *block_cut_last(t_block *block);
-char		block_sort(t_lists *lists);
+void	little_sorts(t_gap *gap);
+int		lsort_fifth(t_gap *gap, int fd);
+void	lsort_four(t_gap *gap, int fd);
+void	lsort_three(t_gap *gap, int fd);
 
 void	sort_gap(t_gap *gap, int fd, char belong);
 int		is_gap_sort(t_gap *gap, char belong);
@@ -105,19 +94,42 @@ void	sort_four_b(t_gap *gap, int fd);
 void	sort_fifth_a(t_gap *gap, int fd);
 void	sort_fifth_b(t_gap *gap, int fd);
 
-t_gap	*rnd_mas_to_gap();
-void	ft_print_mas(int *mas, int razm_mas);
+void	ft_free_ollgap(t_gap *gap);
+void	*ft_free_imas(int *mas);
+void	*ft_free_ccmas(char **mas);
+void	*ft_free_block(t_block *block);
+void	sorter(t_lists *lists);
+
+/* finish */
+t_gap	*argv_to_gap(int argc, char **argv);
+void	decoder();
+void	simplificator(char *str);
 int		trim_into_three(t_lists *lists);
-void	commands(char *com, char belong, int fd);
+int		separator(t_lists *lists, int b_first, int fd);
+void	up_commands(int len_a, int len_b);
+void	ft_error();
 char 	belconv(char c);
-int		itoc(int i);
-int		ctoi(int c, int i);
+
+void	gap_del(t_gap *gap);
+int 	gap_len_forblock(t_block *block);
+int		gap_len(t_gap *gap);
+int		gap_min_num(t_gap *gap);
+t_gap	*gap_new(int number);
+void	gap_print(t_gap *gap);
+void	gap_print_num(t_gap *gap);
+int		gap_put_before(t_gap **elem, t_gap *before);
+int		gap_put_after(t_gap **elem, t_gap *after);
+void	gap_swap(t_gap *gap, int fd);
 t_gap	*last_gap(t_gap *gap);
 t_block *last_block(t_block *block);
-void	up_commands(int len_a, int len_b);
-void	ft_error(int key, char *str);
-void	sorter(t_lists *lists);
-t_gap *argv_mas_to_gap(int argc, char **argv);
-void decoder();
+t_block *block_cut_last(t_block *block);
+t_block	*block_del(t_block *del);
+t_block	*block_new(t_gap *gap, char belong);
+int		block_put_before(t_block **list, t_block *before);
+int		block_put_after(t_block **elem, t_block *after);
+char		block_sort(t_lists *lists);
+
+
+
 
 #endif

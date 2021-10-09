@@ -1,6 +1,6 @@
 #include "../push_swap.h"
 
-void	gap_free_oll(t_gap *gap)
+void	ft_free_ollgap(t_gap *gap)
 {
 	t_gap	*buf;
 

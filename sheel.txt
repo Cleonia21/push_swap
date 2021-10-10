@@ -1,3 +1,4 @@
 gcc rand_num/random_num.c libft/libft.a -o random_num
-ARG=$(./random_num 10); ./push_swap $ARG | ./checker_Mac $ARG
+ARG=$(./random_num 500); ./push_swap $ARG | ./checker_Mac $ARG
 gcc main.c */*.c libft/libft.a -o push_swap
+leaks --atExit -- ./push_swap $(./random_num 500)

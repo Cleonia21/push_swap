@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   argv_to_imas.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 18:55:16 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/10 18:55:17 by cleonia          ###   ########.fr       */
+/*   Created: 2021/10/10 19:26:20 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/10 19:27:38 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../push_swap.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+int	*argv_to_imas(int argc, char **argv)
 {
-	size_t	i;
-	size_t	j;
+	int	*mas;
+	int	i;
 
-	if (!needle[0])
-		return ((char *)haystack);
 	i = 0;
-	while (haystack[i] && i < len)
+	mas = (int *)malloc(sizeof(int) * argc);
+	if (mas == NULL)
+		return (NULL);
+	while (i < argc)
 	{
-		j = 0;
-		while (haystack[i + j] && needle[j]
-			&& i + j < len && haystack[i + j] == needle[j])
-			j++;
-		if (!needle[j])
-			return ((char *)(haystack + i));
+		if (argv[i] == NULL)
+			return (ft_free_imas(mas));
+		if (ft_isstrnum(argv[i]) == 0)
+			return (ft_free_imas(mas));
+		if (ft_isstrint(argv[i]) == 0)
+			return (ft_free_imas(mas));
+		mas[i] = ft_atoi(argv[i]);
 		i++;
 	}
-	return (NULL);
+	return (mas);
 }

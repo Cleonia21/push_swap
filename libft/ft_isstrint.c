@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isstrint.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 18:54:32 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/10 19:03:11 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-static	char	*make_pattern()
+static	char	*make_pattern(void)
 {
-	char *pattern;
+	char	*pattern;
 
 	pattern = (char *)malloc(sizeof(char) * 10);
 	if (pattern == NULL)
@@ -20,7 +32,7 @@ static	char	*make_pattern()
 	return (pattern);
 }
 
-int		compare(char *str, int sign)
+int	compare(char *str, int sign)
 {
 	char	*pattern;
 
@@ -44,7 +56,7 @@ int		compare(char *str, int sign)
 }
 
 /* [−2 147 483 648, +2 147 483 647] */
-int		ft_isstrint(char *str)
+int	ft_isstrint(char *str)
 {
 	int		sign;
 	int		retval;

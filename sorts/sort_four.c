@@ -28,7 +28,7 @@ int sort_four_a(t_gap *gap, int fd)
 	}
 	if (ra == 1)
 		ft_putstr_fd("rra-", fd);
-	retval += sort_gap(buf, fd, 'b');
+	retval += sort_gap(buf, fd, 'b', gap_len(buf));
 	return (retval);
 }
 
@@ -51,7 +51,7 @@ int sort_four_b(t_gap *gap, int fd)
 		}
 		gap = gap->front;
 	}
-	retval += sort_gap(buf, fd, 'a');
+	retval += sort_gap(buf, fd, 'a', gap_len(buf));
 	ft_putstr_fd("rrb-pa-", fd);
 	return (retval);
 }

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   separator.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 19:26:34 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/10 19:41:13 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-static t_separator *new_sepr()
+static	t_separator	*new_sepr(void)
 {
 	t_separator	*sepr;
 
@@ -37,7 +49,7 @@ t_separator	*ft_sepr(t_lists *lists, t_separator	*sepr, int fd, char belong)
 	return (sepr);
 }
 
-int		separator(t_lists *lists, char belong, int fd)
+int	separator(t_lists *l, char belong, int fd)
 {
 	t_separator	*sepr;
 	int			retval;
@@ -47,17 +59,17 @@ int		separator(t_lists *lists, char belong, int fd)
 	if (sepr == NULL)
 		return (-1);
 	if (belong == 'a')
-		sepr = ft_sepr(lists, sepr, fd, belong);
+		sepr = ft_sepr(l, sepr, fd, belong);
 	else if (belong == 'b')
-		sepr = ft_sepr(lists, sepr, fd, belong);
+		sepr = ft_sepr(l, sepr, fd, belong);
 	if (sepr == NULL)
 		return (-1);
 	if (belong == 'a')
-		retval += block_put_before(&(lists->block_b), block_new(sepr->gap1, 'b'));
+		retval += block_put_before(&(l->block_b), block_new(sepr->gap1, 'b'));
 	else if (belong == 'b')
-		retval += block_put_before(&(lists->block_a), block_new(sepr->gap1, 'a'));
-	retval += block_put_after(&(lists->block_a), block_new(sepr->gap2, 'a'));
-	retval += block_put_after(&(lists->block_b), block_new(sepr->gap3, 'b'));
+		retval += block_put_before(&(l->block_a), block_new(sepr->gap1, 'a'));
+	retval += block_put_after(&(l->block_a), block_new(sepr->gap2, 'a'));
+	retval += block_put_after(&(l->block_b), block_new(sepr->gap3, 'b'));
 	free(sepr);
 	if (retval != 0)
 		return (-1);

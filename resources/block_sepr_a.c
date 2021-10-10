@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   block_sepr_a.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 19:26:23 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/10 19:43:28 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-static  void	sepr_a_com(t_block *from, int fd)
+static	void	sepr_a_com(t_block *from, int fd)
 {
 	while (from->gap)
 	{
 		if (from->gap->number > from->param->max)
 			ft_putstr_fd("pb-", fd);
-		else if (from->gap->number > from->param->min &&
-				from->gap->number <= from->param->max)
+		else if (from->gap->number > from->param->min
+			&& from->gap->number <= from->param->max)
 			ft_putstr_fd("ra-", fd);
 		else
 			ft_putstr_fd("pb-rb-", fd);
@@ -17,8 +29,8 @@ static  void	sepr_a_com(t_block *from, int fd)
 
 t_separator	*block_sepr_a(t_block *from, t_separator *spr, int fd)
 {
-	int retval;
-	t_gap *first_gap;
+	int		retval;
+	t_gap	*first_gap;
 
 	retval = 0;
 	first_gap = from->gap;
@@ -28,8 +40,8 @@ t_separator	*block_sepr_a(t_block *from, t_separator *spr, int fd)
 	{
 		if (from->gap->number > from->param->max)
 			retval += gap_put_before(&(spr->gap1), gap_new(from->gap->number));
-		else if (from->gap->number > from->param->min &&
-				from->gap->number <= from->param->max)
+		else if (from->gap->number > from->param->min
+			&& from->gap->number <= from->param->max)
 			retval += gap_put_after(&(spr->gap2), gap_new(from->gap->number));
 		else
 			retval += gap_put_after(&(spr->gap3), gap_new(from->gap->number));

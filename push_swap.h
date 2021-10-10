@@ -83,7 +83,8 @@ int		lsort_fifth(t_gap *gap, int fd);
 void	lsort_four(t_gap *gap, int fd);
 void	lsort_three(t_gap *gap, int fd);
 
-int		sort_gap(t_gap *gap, int fd, char belong);
+char	block_sort(t_lists *lists, int fd);
+int		sort_gap(t_gap *gap, int fd, char belong, int gaplen);
 int		is_gap_sort(t_gap *gap, char belong);
 int		sort_two_a(t_gap *gap, int fd);
 int		sort_two_b(t_gap *gap, int fd);
@@ -93,6 +94,7 @@ int		sort_four_a(t_gap *gap, int fd);
 int		sort_four_b(t_gap *gap, int fd);
 int		sort_fifth_a(t_gap *gap, int fd);
 int		sort_fifth_b(t_gap *gap, int fd);
+int	sort_big_block(t_gap *gap, int fd, char belong);
 
 void	*ft_free_ollgap(t_gap **gap);
 void	*ft_free_imas(int *mas);
@@ -108,9 +110,11 @@ void		*free_separator(t_separator *sepr, t_block *block);
 
 /* finish */
 t_gap	*argv_to_gap(int argc, char **argv);
+int		*argv_to_imas(int argc, char **argv);
+t_gap	*imas_to_gap(int *mas, int argc);
 int		decoder();
 void	simplificator(char *str);
-int		trim_into_three(t_lists *lists);
+int		trim_into_three(t_lists *lists, int fd);
 void	up_commands(int len_a, int len_b);
 void	ft_error();
 char 	belconv(char c);
@@ -134,7 +138,7 @@ t_block	*block_del(t_block *del);
 t_block	*block_new(t_gap *gap, char belong);
 int		block_put_before(t_block **list, t_block *before);
 int		block_put_after(t_block **elem, t_block *after);
-char		block_sort(t_lists *lists);
+
 
 
 

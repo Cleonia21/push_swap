@@ -6,13 +6,13 @@
 /*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:36:04 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/09 15:09:12 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/10 19:39:24 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-static int get_com_key(char *str)
+static	int	get_com_key(char *str)
 {
 	if (*str == '\0')
 		return (0);
@@ -35,7 +35,7 @@ static int get_com_key(char *str)
 	return (0);
 }
 
-static int get_next_com_key(char *str)
+static	int	get_next_com_key(char *str)
 {
 	while (*str != '-' && *str != '\0')
 		str++;
@@ -45,7 +45,7 @@ static int get_next_com_key(char *str)
 	return (get_com_key(str));
 }
 
-char *paste_dash(char *str)
+char	*paste_dash(char *str)
 {
 	while (*str != '-' && *str != '\0')
 	{
@@ -57,7 +57,7 @@ char *paste_dash(char *str)
 	return (++str);
 }
 
-char *paste_key(int key, char *str)
+char	*paste_key(int key, char *str)
 {
 	if (key == SASB)
 	{
@@ -87,18 +87,20 @@ char *paste_key(int key, char *str)
 
 void	simplificator(char *str)
 {
-	int com;
-	int next_com;
+	int	com;
+	int	next_com;
 
 	while (*str != '\0')
 	{
 		com = get_com_key(str);
 		next_com = get_next_com_key(str);
-		if (com + 1 == next_com || com - 1 == next_com)
-			str = paste_key(com / 10, str);
-		else if ((com == RA && next_com == RRA) || (com == RRA && next_com == RA)
-			|| (com == RB && next_com == RRB) || (com == RRB && next_com == RB))
+		if ((com == RA && next_com == RRA)
+			|| (com == RRA && next_com == RA)
+			|| (com == RB && next_com == RRB)
+			|| (com == RRB && next_com == RB))
 			str = paste_dash(paste_dash(str));
+		else if (com + 1 == next_com || com - 1 == next_com)
+			str = paste_key(com / 10, str);
 		else
 		{
 			while (*str != '-' && *str != '\0')

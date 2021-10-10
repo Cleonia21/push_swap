@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   block_new.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 18:49:52 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/10 18:50:44 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-static void	make_block_param(t_gap *gap, t_param *param)
+static	void	make_block_param(t_gap *gap, t_param *param)
 {
 	param->elem_num = gap_len(gap);
 	param->first = gap_min_num(gap);
@@ -10,7 +22,7 @@ static void	make_block_param(t_gap *gap, t_param *param)
 
 t_block	*block_new(t_gap *gap, char belong)
 {
-	t_block *empty;
+	t_block	*empty;
 
 	if (gap == NULL)
 		return (NULL);

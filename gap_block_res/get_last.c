@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_last.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 18:50:11 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/10 18:51:53 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-t_block *last_block(t_block *block)
+t_block	*last_block(t_block *block)
 {
 	if (block == NULL)
 		return (NULL);
@@ -9,7 +21,7 @@ t_block *last_block(t_block *block)
 	return (block);
 }
 
-t_gap *last_gap(t_gap *gap)
+t_gap	*last_gap(t_gap *gap)
 {
 	if (gap == NULL)
 		return (NULL);

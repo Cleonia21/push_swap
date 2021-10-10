@@ -23,9 +23,9 @@ int	sort_fifth_b(t_gap *gap, int fd)
 		}
 		gap = gap->front;
 	}
-	retval += sort_gap(a_gap, fd, 'a');
+	retval += sort_gap(a_gap, fd, 'a', gap_len(a_gap));
 	ft_putstr_fd("rra-rra-", fd);
-	retval += sort_gap(under_gap, fd, 'a');
+	retval += sort_gap(under_gap, fd, 'a', gap_len(under_gap));
 	return (0);
 }
 
@@ -58,12 +58,12 @@ int	sort_fifth_a(t_gap *gap, int fd)
 			gap = gap->front;
 		}
 	}
-	retval += sort_gap(b_gap, fd, 'b');
+	retval += sort_gap(b_gap, fd, 'b', gap_len(b_gap));
 	if (ra == 1)
 		ft_putstr_fd("rra-", fd);
 	if (ra == 2)
 		ft_putstr_fd("rra-rra-", fd);
-	retval += sort_gap(under_gap, fd, 'a');
+	retval += sort_gap(under_gap, fd, 'a', gap_len(under_gap));
 	if (retval != 0)
 		return (-1);
 	return (0);

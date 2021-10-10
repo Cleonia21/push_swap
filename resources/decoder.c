@@ -6,13 +6,34 @@
 /*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:36:00 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/10 15:10:39 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/10 19:41:41 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-int		decoder()
+static	void	ft_print(char *str)
+{
+	int	mark;
+
+	mark = 0;
+	while (*str != '\0')
+	{
+		if (*str != '-' || *(str + 1) != '-')
+		{
+			if (mark == 0 && *str == '-')
+				str++;
+			if (*str == '-')
+				ft_putchar_fd('\n', 1);
+			else
+				ft_putchar_fd(*str, 1);
+			mark++;
+		}
+		str++;
+	}
+}
+
+int	decoder(void)
 {
 	char	*str;
 	char	*buf_str;
@@ -27,21 +48,7 @@ int		decoder()
 		return (-1);
 	buf_str = str;
 	simplificator(str);
-	fd = 0;
-	while (*str != '\0')
-	{
-		if (*str != '-' || *(str + 1) != '-')
-		{
-			if (fd == 0 && *str == '-')
-				str++;
-			if (*str == '-')
-				ft_putchar_fd('\n', 1);
-			else
-				ft_putchar_fd(*str, 1);
-			fd++;
-		}
-		str++;
-	}
+	ft_print(str);
 	free(buf_str);
 	return (1);
 }

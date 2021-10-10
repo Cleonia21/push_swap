@@ -40,7 +40,7 @@ int	sort_fifth_a(t_gap *gap, int fd)
 	ra = 0;
 	b_gap = NULL;
 	under_gap = NULL;
-	while (is_gap_sort(gap, 'a') == -1)
+	while (gap->front != NULL)
 	{
 		if (gap->number == 4)
 			gap_swap(gap, fd);

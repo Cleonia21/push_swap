@@ -6,7 +6,7 @@
 /*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 00:21:23 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/10 17:05:42 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/10 18:13:26 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv)
 	int		retval;
 	int		fd;
 
+	retval = 'e';
 	fd = open("commands.inf", O_TRUNC);
 	if (fd == -1)
 		ft_error(FILE_OPEN, "main");
@@ -63,8 +64,10 @@ int	main(int argc, char **argv)
 	if (gap_len(gap) <= 5)
 		little_sorts(gap);
 	else
-		sorter(&lists);
+		retval = sorter(&lists);
 	decoder();
 	ft_free_lists(&lists);
+	if (retval != 'e')
+		ft_error();
 	return (0);
 }

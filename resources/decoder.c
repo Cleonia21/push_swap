@@ -3,26 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   decoder.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cleonia <cleonia@school.42>                +#+  +:+       +#+        */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:36:00 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/08 13:42:39 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/10 15:10:39 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	decoder()
+int		decoder()
 {
 	char	*str;
+	char	*buf_str;
 	int		fd;
 
 	fd = open("commands.inf", O_RDONLY);
 	if (fd == -1)
-		ft_error(FILE_OPEN, "decoder");
-	get_next_line(fd, &str);
+		return (-1);
+	if (get_next_line(fd, &str) == -1)
+		return (-1);
 	if (str == NULL)
-		ft_error(MEMORY_ALLOC, "decoder");
+		return (-1);
+	buf_str = str;
 	simplificator(str);
 	fd = 0;
 	while (*str != '\0')
@@ -39,4 +42,6 @@ void	decoder()
 		}
 		str++;
 	}
+	free(buf_str);
+	return (1);
 }

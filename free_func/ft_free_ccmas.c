@@ -2,10 +2,14 @@
 
 void	*ft_free_ccmas(char **mas)
 {
-	while (mas)
+	int i;
+
+	i = 0;
+	while (mas[i])
 	{
-		free (*mas);
-		mas++;
+		free (mas[i]);
+		i++;
 	}
+	free(mas);
 	return (NULL);
 }

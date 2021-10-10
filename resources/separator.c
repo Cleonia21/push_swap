@@ -33,7 +33,7 @@ t_separator	*ft_sepr(t_lists *lists, t_separator	*sepr, int fd, char belong)
 			return (NULL);
 		lists->block_b = lists->block_b->front;
 	}
-	ft_free_block(buf_block);
+	ft_free_block(&buf_block);
 	return (sepr);
 }
 

@@ -47,12 +47,12 @@ static	t_gap	*imas_to_gap(int *mas, int argc)
 		tmp = search_numindex(sort_mas, argc, mas[i]);
 		if (tmp == -1)
 		{
-			ft_free_ollgap(gap);
+			ft_free_ollgap(&gap);
 			return (ft_free_imas(sort_mas));
 		}
 		if (gap_put_after(&gap, gap_new(tmp)) == -1)
 		{
-			ft_free_ollgap(gap);
+			ft_free_ollgap(&gap);
 			return (ft_free_imas(sort_mas));
 		}
 		i++;
@@ -92,7 +92,7 @@ t_gap *argv_to_gap(int argc, char **argv)
 
 	mark = 0;
 	if (argc < 2)
-		return (NULL);
+		exit(0);
 	else if (argc == 2)
 	{
 		argc = ft_symbol_num(argv[1], ' ') + 1;
@@ -112,8 +112,10 @@ t_gap *argv_to_gap(int argc, char **argv)
 	else if (imas == NULL && mark == 0)
 		return (NULL);
 	gap = imas_to_gap(imas, argc);
-	if (gap == NULL)
-		return (ft_free_imas(imas));
+	if (mark == 1)
+		ft_free_ccmas(argv);
 	ft_free_imas(imas);
+	if (gap == NULL)
+		return (NULL);
 	return (gap);
 }

@@ -4,16 +4,16 @@ int	sort_big_block(t_gap *gap, int fd, char belong)
 {
 	t_gap *first;
 	t_gap *second;
-	int middle;
 	int retval;
 
 	retval = 0;
 	first = NULL;
 	second = NULL;
-	middle = gap_min_num(gap) + 4;
+
+
 	while (gap)
 	{
-		if (gap->number >= middle)
+		if (gap->number >= 4)
 		{
 			retval += gap_put_before(&first, gap_new(gap->number));
 			if (belong == 'a')
@@ -42,6 +42,7 @@ int sort_gap(t_gap *gap, int fd, char belong)
 	int gaplen;
 	int retval;
 
+	retval = 0;
 	gaplen = gap_len(gap);
 	gap = simplification_gap(gap);
 	if (gaplen > 5)
@@ -62,7 +63,7 @@ int sort_gap(t_gap *gap, int fd, char belong)
 		retval = sort_two_a(gap, fd);
 	else if (gaplen == 2 && belong == 'b')
 		retval = sort_two_b(gap, fd);
-	ft_free_ollgap(gap);
+	ft_free_ollgap(&gap);
 	return (retval);
 }
 
@@ -102,19 +103,20 @@ char block_sort(t_lists *lists)
 	if (belong == 'a')
 	{
 		buf_block = lists->block_a;
-		if (sort_gap(lists->block_a->gap, fd, belong) != 0)
+		if (sort_gap(buf_block->gap, fd, belong) != 0)
 			return ('o');
+		buf_block->gap = NULL;
 		lists->block_a = lists->block_a->front;
 	}
 	else if (belong == 'b')
 	{
 		buf_block = lists->block_b;
-		if (sort_gap(lists->block_b->gap, fd, belong) != 0)
+		if (sort_gap(buf_block->gap, fd, belong) != 0)
 			return ('o');
+		buf_block->gap = NULL;
 		lists->block_b = lists->block_b->front;
 	}
-	buf_block->gap = NULL;
-	ft_free_block(buf_block);
+	ft_free_block(&buf_block);
 	close (fd);
 	return (belong);
 }

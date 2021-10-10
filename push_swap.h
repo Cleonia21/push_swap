@@ -78,7 +78,7 @@ enum errors
 
 t_gap	*simplification_gap(t_gap *gap);
 
-void	little_sorts(t_gap *gap);
+int		little_sorts(t_gap *gap);
 int		lsort_fifth(t_gap *gap, int fd);
 void	lsort_four(t_gap *gap, int fd);
 void	lsort_three(t_gap *gap, int fd);
@@ -94,10 +94,10 @@ int		sort_four_b(t_gap *gap, int fd);
 int		sort_fifth_a(t_gap *gap, int fd);
 int		sort_fifth_b(t_gap *gap, int fd);
 
-void	ft_free_ollgap(t_gap *gap);
+void	*ft_free_ollgap(t_gap **gap);
 void	*ft_free_imas(int *mas);
 void	*ft_free_ccmas(char **mas);
-void	*ft_free_block(t_block *block);
+void	*ft_free_block(t_block **block);
 int		sorter(t_lists *lists);
 
 int		separator(t_lists *lists, char belong, int fd);
@@ -108,7 +108,7 @@ void		*free_separator(t_separator *sepr, t_block *block);
 
 /* finish */
 t_gap	*argv_to_gap(int argc, char **argv);
-void	decoder();
+int		decoder();
 void	simplificator(char *str);
 int		trim_into_three(t_lists *lists);
 void	up_commands(int len_a, int len_b);

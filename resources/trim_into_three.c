@@ -6,7 +6,7 @@
 /*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:35:49 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/10 20:26:39 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/12 15:14:18 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	trim_into_three(t_lists *lists, int	fd)
 	int		b_first;
 	char	belong;
 
+	belong = 'a';
 	b_first = -1;
 	if (lists->block_b)
 		b_first = lists->block_b->param->first;

@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chek_for_up.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 13:12:54 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/12 13:22:22 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 typedef struct s_min
 {
 	int	a_first;
-	int b_first;
-	int a_end;
+	int	b_first;
+	int	a_end;
 	int	b_end;
 }				t_min;
 
-static void blocks_up(t_block **block_f, t_block **block_u)
+static	void	blocks_up(t_block **block_f, t_block **block_u)
 {
-	t_block *buf_f;
-	t_block *buf_u;
+	t_block	*buf_f;
+	t_block	*buf_u;
 
 	if (block_u == NULL || *block_u == NULL)
 	{
@@ -35,7 +47,7 @@ static void blocks_up(t_block **block_f, t_block **block_u)
 		block_put_before(block_u, buf_u);
 }
 
-static  t_block *block_get_last(t_block *block)
+static	t_block	*block_get_last(t_block *block)
 {
 	if (block == NULL)
 		return (NULL);
@@ -44,9 +56,10 @@ static  t_block *block_get_last(t_block *block)
 	return (block);
 }
 
-static  t_min initial_min()
+static t_min	initial_min(void)
 {
-	t_min min;
+	t_min	min;
+
 	min.a_first = -1;
 	min.a_end = -1;
 	min.b_first = -1;
@@ -56,7 +69,7 @@ static  t_min initial_min()
 
 void	chek_for_up(t_lists *lists)
 {
-	t_min min;
+	t_min	min;
 
 	min = initial_min();
 	if (lists->block_a)

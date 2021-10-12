@@ -1,23 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_four.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 13:12:28 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/12 15:15:00 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-int sort_four_a(t_gap *gap, int fd)
+int	sort_four_a(t_gap *gap, int fd)
 {
-	int ra;
-	t_gap *buf;
-	int retval;
+	t_gap	*buf;
+	int		retval;
 
 	retval = 0;
-	ra = 0;
 	buf = NULL;
-	while (is_gap_sort(gap, 'a') == -1)
+	while (gap->front != NULL)
 	{
 		if (gap->number == 3)
 			gap_swap(gap, fd);
 		else if (gap->number == 2)
 		{
-			gap = gap->front;
 			ft_putstr_fd("ra-", fd);
-			ra = 1;
+			retval++;
+			gap = gap->front;
 		}
 		else
 		{
@@ -26,17 +36,15 @@ int sort_four_a(t_gap *gap, int fd)
 			gap = gap->front;
 		}
 	}
-	if (ra == 1)
+	if (retval == 1)
 		ft_putstr_fd("rra-", fd);
-	retval += sort_gap(buf, fd, 'b', gap_len(buf));
-	return (retval);
+	return (retval + sort_gap(buf, fd, 'b', gap_len(buf)) - 1);
 }
 
-int sort_four_b(t_gap *gap, int fd)
+int	sort_four_b(t_gap *gap, int fd)
 {
-	t_gap *buf;
-	int min;
-	int retval;
+	t_gap	*buf;
+	int		retval;
 
 	retval = 0;
 	buf = NULL;

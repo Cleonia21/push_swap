@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   little_sorts.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 13:12:49 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/12 13:14:01 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 static	void	lsort_two(t_gap *gap, int fd)
@@ -8,8 +20,8 @@ static	void	lsort_two(t_gap *gap, int fd)
 
 int	little_sorts(t_gap *gap)
 {
-	int fd;
-	int len;
+	int	fd;
+	int	len;
 
 	fd = open("commands.inf", O_WRONLY | O_APPEND);
 	if (fd == -1)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lsort_fifth.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 13:12:47 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/12 13:14:24 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 static	int	free_fifth(t_gap *two, t_gap *three)
@@ -18,9 +30,9 @@ static	void	two_putcom(int num, int fd)
 
 int	lsort_fifth(t_gap *gap, int fd)
 {
-	t_gap *gap_three;
-	t_gap *gap_two;
-	int retval;
+	t_gap	*gap_three;
+	t_gap	*gap_two;
+	int		retval;
 
 	retval = 0;
 	gap_three = NULL;

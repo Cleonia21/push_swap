@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_three.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 13:12:23 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/12 13:20:17 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-typedef struct		s_nums
+typedef struct s_nums
 {
 	int				first;
 	int				second;
 	int				third;
 }					t_nums;
 
-t_nums initial_nums(t_gap *gap)
+t_nums	initial_nums(t_gap *gap)
 {
-	t_nums nums;
+	t_nums	nums;
 
 	nums.first = gap->number;
 	gap = gap->front;
@@ -21,7 +33,7 @@ t_nums initial_nums(t_gap *gap)
 
 int	sort_three_a(t_gap *gap, int fd)
 {
-	t_nums nums;
+	t_nums	nums;
 
 	nums = initial_nums(gap);
 	if (nums.first == 0)
@@ -48,7 +60,7 @@ int	sort_three_a(t_gap *gap, int fd)
 
 int	sort_three_b(t_gap *gap, int fd)
 {
-	t_nums nums;
+	t_nums	nums;
 
 	nums = initial_nums(gap);
 	if (nums.first == 2)

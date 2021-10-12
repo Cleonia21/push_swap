@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_fifth.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 13:12:32 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/12 13:20:47 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 int	sort_fifth_b(t_gap *gap, int fd)
 {
-	t_gap *a_gap;
-	t_gap *under_gap;
-	int retval;
+	t_gap	*a_gap;
+	t_gap	*under_gap;
+	int		retval;
 
 	retval = 0;
 	a_gap = NULL;
@@ -26,18 +38,27 @@ int	sort_fifth_b(t_gap *gap, int fd)
 	retval += sort_gap(a_gap, fd, 'a', gap_len(a_gap));
 	ft_putstr_fd("rra-rra-", fd);
 	retval += sort_gap(under_gap, fd, 'a', gap_len(under_gap));
-	return (0);
+	return (retval);
+}
+
+static	int	b_under_sorts(t_gap *b_gap, t_gap *under_gap, int fd)
+{
+	int	retval;
+
+	retval = 0;
+	retval += sort_gap(b_gap, fd, 'b', gap_len(b_gap));
+	ft_putstr_fd("rra-rra-", fd);
+	retval += sort_gap(under_gap, fd, 'a', gap_len(under_gap));
+	return (retval);
 }
 
 int	sort_fifth_a(t_gap *gap, int fd)
 {
-	t_gap *b_gap;
-	t_gap *under_gap;
-	int ra;
-	int retval;
+	t_gap	*b_gap;
+	t_gap	*under_gap;
+	int		retval;
 
 	retval = 0;
-	ra = 0;
 	b_gap = NULL;
 	under_gap = NULL;
 	while (gap->front != NULL)
@@ -52,19 +73,10 @@ int	sort_fifth_a(t_gap *gap, int fd)
 		}
 		else if (gap->number == 1 || gap->number == 0)
 		{
-			ra++;
 			ft_putstr_fd("ra-", fd);
 			retval += gap_put_after(&under_gap, gap_new(gap->number));
 			gap = gap->front;
 		}
 	}
-	retval += sort_gap(b_gap, fd, 'b', gap_len(b_gap));
-	if (ra == 1)
-		ft_putstr_fd("rra-", fd);
-	if (ra == 2)
-		ft_putstr_fd("rra-rra-", fd);
-	retval += sort_gap(under_gap, fd, 'a', gap_len(under_gap));
-	if (retval != 0)
-		return (-1);
-	return (0);
+	return (retval + b_under_sorts(b_gap, under_gap, fd));
 }

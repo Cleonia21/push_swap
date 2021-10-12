@@ -6,27 +6,47 @@
 /*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 00:21:23 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/10 18:13:26 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/12 15:39:50 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_free_lists(t_lists *lists)
+static	void	ft_free_lists(t_lists *lists)
 {
-	t_block *block_buf;
-	
+	t_block	*block_buf;
+
 	while (lists->block_a)
 	{
 		block_buf = lists->block_a->front;
 		ft_free_block(&(lists->block_a));
-		lists->block_a = block_buf;	
+		lists->block_a = block_buf;
 	}
 	while (lists->block_b)
 	{
 		block_buf = lists->block_b->front;
 		ft_free_block(&(lists->block_b));
-		lists->block_b = block_buf;	
+		lists->block_b = block_buf;
+	}
+	decoder();
+}
+
+static	void	clean_file(void)
+{
+	int	fd;
+
+	fd = open("commands.inf", O_TRUNC);
+	if (fd == -1)
+		ft_error();
+	close (fd);
+}
+
+static	void	chek_for_sorting_gap(t_gap *gap)
+{
+	if (is_gap_sort(gap, 'a') == 1)
+	{
+		ft_free_ollgap(&gap);
+		exit (0);
 	}
 }
 
@@ -34,22 +54,12 @@ int	main(int argc, char **argv)
 {
 	t_lists	lists;
 	t_gap	*gap;
-	int		retval;
-	int		fd;
 
-	retval = 'e';
-	fd = open("commands.inf", O_TRUNC);
-	if (fd == -1)
-		ft_error(FILE_OPEN, "main");
-	close (fd);
-    gap = argv_to_gap(argc, argv);
+	clean_file();
+	gap = argv_to_gap(argc, argv);
 	if (gap == NULL)
 		ft_error();
-	if (is_gap_sort(gap, 'a') == 1)
-	{
-		ft_free_ollgap(&gap);
-		exit (0);
-	}
+	chek_for_sorting_gap(gap);
 	lists.block_a = block_new(gap, 'a');
 	if (lists.block_a == NULL)
 	{
@@ -63,11 +73,8 @@ int	main(int argc, char **argv)
 	}
 	if (gap_len(gap) <= 5)
 		little_sorts(gap);
-	else
-		retval = sorter(&lists);
-	decoder();
-	ft_free_lists(&lists);
-	if (retval != 'e')
+	else if (sorter(&lists) == 'o')
 		ft_error();
-	return (0);
+	ft_free_lists(&lists);
+	exit(0);
 }

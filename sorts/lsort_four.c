@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lsort_four.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 13:12:44 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/12 15:14:48 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-typedef struct		s_nums
+typedef struct s_nums
 {
 	int				first;
 	int				second;
 	int				third;
 }					t_nums;
 
-static	t_nums initial_nums(t_gap *gap, int sum_com)
+static	t_nums	initial_nums(t_gap *gap, int sum_com)
 {
-	t_nums nums;
+	t_nums	nums;
 
 	if (sum_com == 2)
 	{
@@ -31,13 +43,12 @@ static	t_nums initial_nums(t_gap *gap, int sum_com)
 		gap = gap->front;
 		nums.third = gap->number;
 	}
-	
 	return (nums);
 }
 
 static	int	ft_sort_three(t_gap *gap, int fd, int sum_com)
 {
-	t_nums nums;
+	t_nums	nums;
 
 	nums = initial_nums(gap, sum_com);
 	if (nums.first == 0)
@@ -62,21 +73,10 @@ static	int	ft_sort_three(t_gap *gap, int fd, int sum_com)
 	return (0);
 }
 
-static	void gap_cut(t_gap *gap)
-{
-	t_gap *buf;
-
-	buf = gap->front;
-	gap->front = buf->front;
-	gap = gap->front;
-	gap->back = buf->back;
-	free(buf);
-}
-
 void	lsort_four(t_gap *gap, int fd)
 {
-	int sum_com;
-	t_gap *buf_gap;
+	int		sum_com;
+	t_gap	*buf_gap;
 
 	sum_com = 0;
 	buf_gap = gap;

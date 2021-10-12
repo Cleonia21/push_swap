@@ -6,7 +6,7 @@
 /*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 19:59:02 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/10 20:14:56 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/12 14:51:57 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,18 @@ int	sort_big_block(t_gap *gap, int fd, char belong)
 	t_gap	*first;
 	t_gap	*second;
 	int		retval;
+	int		middle;
 
+	if (gap_len(gap) == 6)
+		middle = 4;
+	else
+		middle = 5;
 	retval = 0;
 	first = NULL;
 	second = NULL;
 	while (gap)
 	{
-		if (gap->number >= 4)
+		if (gap->number >= middle)
 			retval += create_first(&first, gap->number, belong, fd);
 		else
 			retval += create_second(&second, gap->number, belong, fd);

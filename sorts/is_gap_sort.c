@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_gap_sort.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 13:12:52 by cleonia           #+#    #+#             */
+/*   Updated: 2021/10/12 14:05:57 by cleonia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-int		is_gap_sort(t_gap *gap, char belong)
+int	is_gap_sort(t_gap *gap, char belong)
 {
-	int buf;
+	int	buf;
 
 	if (gap == NULL)
-		ft_error(ARG_NULL, "is_it_sort");
+		return (-1);
 	buf = gap->number;
 	while (gap && belong == 'a')
 	{

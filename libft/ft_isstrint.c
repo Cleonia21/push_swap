@@ -6,7 +6,7 @@
 /*   By: cleonia <cleonia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 18:54:32 by cleonia           #+#    #+#             */
-/*   Updated: 2021/10/10 19:03:11 by cleonia          ###   ########.fr       */
+/*   Updated: 2021/10/12 15:13:36 by cleonia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	compare(char *str, int sign)
 int	ft_isstrint(char *str)
 {
 	int		sign;
-	int		retval;
 
 	if (str == NULL)
 		return (0);

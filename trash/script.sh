@@ -7,7 +7,7 @@
 #     echo ${myarr[$i]}
 # done
 
-for (( count=1; count<10; count++ ))
+for (( count=1; count<100; count++ ))
 	do
 		ARG2=$(./random_num 2);
 		ARG3=$(./random_num 3);
